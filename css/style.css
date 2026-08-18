@@ -1,0 +1,387 @@
+/* RESET E CONFIGURAÇÕES GERAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at 50% -20%, #1a052b 0%, #000000 80%);
+    background-attachment: fixed;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+/* Efeito de ruído sutil no fundo */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.03%22/%3E%3C/svg%3E');
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* HEADER FIXO */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(45, 10, 80, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    z-index: 1000;
+    padding: 1rem 5%;
+    box-shadow: 0 4px 20px rgba(100, 0, 150, 0.15);
+}
+
+.header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: #c084fc;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links a:not(.header-socials a) {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:not(.header-socials a):hover {
+    color: #c084fc;
+}
+
+.header-socials {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.header-socials a, .footer-socials a {
+    color: #ffffff;
+    font-size: 1.2rem;
+    background: rgba(168, 85, 247, 0.1);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.header-socials a:hover, .footer-socials a:hover {
+    background: #a855f7;
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+/* LAYOUT DE DUAS COLUNAS PRINCIPAIS (SIDEBAR + CONTEÚDO) */
+.page-layout {
+    max-width: 1300px;
+    margin: 120px auto 60px auto;
+    padding: 0 3%;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+/* SIDEBAR ESTILO */
+.sidebar-card {
+    position: sticky;
+    top: 100px;
+}
+
+.profile-avatar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    background-color: #1a052b;
+}
+
+.sidebar-card h3 {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+}
+
+.profile-role {
+    text-align: center;
+    color: #c084fc;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.section-title-mini {
+    color: #e2e8f0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    min-width: 0;
+}
+
+/* CARDS ESTILO VIDRO FOSCO COM BLUR */
+.card {
+    background: rgba(13, 13, 13, 0.7);
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+    padding: 2.5rem;
+    border: 1px solid rgba(168, 85, 247, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.card:hover {
+    background: rgba(20, 20, 20, 0.8);
+    transform: scale(1.01);
+    box-shadow: 0 12px 40px rgba(100, 20, 150, 0.2);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.full-width-card {
+    width: 100%;
+}
+
+/* PRIMEIRO CARD: TECNOLOGIAS */
+.card h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+    padding-bottom: 0.75rem;
+}
+
+.tech-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tech-item {
+    color: #cbd5e1;
+    font-size: 1rem;
+}
+
+.tech-item span {
+    color: #e2e8f0;
+    background: rgba(168, 85, 247, 0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-left: 0.3rem;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+/* GRID DUAS COLUNAS INTERNAS (PROJETOS E SOBRE MIM) */
+.grid-two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+}
+
+/* SEÇÃO DE PROJETOS */
+.project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-item h3 a {
+    color: #c084fc;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+.project-item h3 a:hover {
+    color: #e879f9;
+    text-decoration: underline;
+}
+
+.project-item p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+}
+
+.github-redirect {
+    border-top: 1px solid rgba(168, 85, 247, 0.1);
+    padding-top: 1rem;
+    font-size: 0.95rem;
+    color: #94a3b8;
+}
+
+.neon-link {
+    color: #c084fc;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.neon-link:hover {
+    color: #e879f9;
+    text-decoration: underline;
+}
+
+/* ESTILIZAÇÃO DO CARD SOBRE MIM (TÓPICOS) */
+.about-text {
+    color: #cbd5e1;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.about-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 12px 0;
+}
+
+.about-list li {
+    margin-bottom: 8px;
+}
+
+.about-footer-text {
+    margin-top: 12px;
+}
+
+/* FOOTER */
+.footer {
+    background-color: #080808;
+    border-top: 1px solid rgba(168, 85, 247, 0.15);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 2rem 5%;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-to-top {
+    color: #c084fc;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.back-to-top:hover {
+    color: #ffffff;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 1rem;
+}
+
+/* CLASSE PARA ANIMAÇÃO DE SCROLL (JS) */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* RESPONSIVIDADE PARA TELAS MENORES E CELULARES */
+@media (max-width: 1024px) {
+    .page-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar-card {
+        position: static;
+    }
+
+    .grid-two-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-container {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 0.5rem 0;
+    }
+
+    .nav-links {
+        gap: 1.2rem;
+    }
+
+    .page-layout {
+        margin-top: 140px;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+    }
+}

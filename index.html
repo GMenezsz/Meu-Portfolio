@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Menezes | Portfólio Backend</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FontAwesome para ícones do GitHub e LinkedIn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body id="inicio">
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#inicio" class="logo">Gabriel Menezes</a>
+            <nav class="nav-links">
+                <a href="#sobre-mim">Sobre Mim</a>
+                <a href="#projetos">Meus Projetos</a>
+                <div class="header-socials">
+                    <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/gabriel-menezes-9367793a1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL COM LAYOUT DE DUAS COLUNAS (SIDEBAR + CONTEÚDO) -->
+    <div class="page-layout">
+
+        <!-- COLUNA ESQUERDA: PERFIL / SIDEBAR -->
+        <aside class="sidebar-card card animate-on-scroll">
+            <div class="profile-avatar-container">
+                <!-- Substitua 'assets/avatar.jpg' pelo caminho da foto do seu rosto, ou cole o link direto de uma imagem -->
+                <img src="assets/avatar.jpg" alt="Foto de Gabriel Menezes" class="profile-avatar" onerror="this.src='https://via.placeholder.com/150/1a052b/c084fc?text=GM'">
+            </div>
+            
+            <div class="info-content">
+                <h3>Gabriel Menezes</h3>
+                <p class="profile-role">Desenvolvedor Backend</p>
+                <br>
+                <p class="section-title-mini">Estudando:</p>
+                <p>🐍 Python</p>
+                <p>☕ Java</p>
+                <p>🗄️ Banco de Dados</p>
+                <br>
+                <p class="section-title-mini">Localização:</p>
+                <p>📍 Coronel Fabriciano - MG</p>
+                <p>🇧🇷 Brasil</p>
+                <br>
+                <p>📧 <a href="mailto:gabriel26guedes@gmail.com" class="neon-link">gabriel26guedes@gmail.com</a></p>
+            </div>
+        </aside>
+
+        <!-- COLUNA DIREITA: CONTEÚDO PRINCIPAL (TECNOLOGIAS, PROJETOS E SOBRE MIM) -->
+        <main class="content-container">
+
+            <!-- PRIMEIRO CARD: TECNOLOGIAS E FERRAMENTAS -->
+            <section class="card full-width-card animate-on-scroll">
+                <h2>🛠️ Tecnologias e Ferramentas</h2>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <strong>Linguagem:</strong> Python
+                    </div>
+                    <div class="tech-item">
+                        <strong>Frameworks & APIs:</strong>
+                        <span>FastAPI</span>, <span>Uvicorn</span>
+                    </div>
+                    <div class="tech-item">
+                        <strong>Banco de Dados:</strong>
+                        <span>SQLite</span>, <span>SQL</span>
+                    </div>
+                    <div class="tech-item">
+                        <strong>Manipulação de Dados:</strong>
+                        <span>Pandas</span>
+                    </div>
+                    <div class="tech-item">
+                        <strong>Segurança & Boas Práticas:</strong>
+                        <span>Bcrypt (Hash de senhas)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GRID INTERNO: PROJETOS E SOBRE MIM -->
+            <div class="grid-two-columns">
+                
+                <!-- SEGUNDO CARD: MEUS PROJETOS -->
+                <section id="projetos" class="card animate-on-scroll">
+                    <h2>🚀 Projetos em Destaque</h2>
+                    <div class="project-list">
+                        <div class="project-item">
+                            <h3><a href="https://github.com/GMenezsz/Calculadora-de-Financiamento-API" target="_blank" rel="noopener noreferrer">🧮 Calculadora de Financiamento (FastAPI)</a></h3>
+                            <p>API desenvolvida em Python com FastAPI para cálculo de financiamentos, contando com validações de regras de negócio personalizadas e separação de módulos.</p>
+                        </div>
+                        <div class="project-item">
+                            <h3><a href="https://github.com/GMenezsz/SecureBankAPI" target="_blank" rel="noopener noreferrer">🏦 SecureBankAPI</a></h3>
+                            <p>Sistema bancário desenvolvido em Python focado em segurança, criptografia de senhas (hash) e persistência de dados com SQLite.</p>
+                        </div>
+                        <div class="project-item">
+                            <h3><a href="https://github.com/GMenezsz/Automacao-de-Planilhas-Excel" target="_blank" rel="noopener noreferrer">📊 Automação de Planilhas</a></h3>
+                            <p>Sistema em Python para automação de leitura, processamento e exportação de planilhas Excel (.xlsx) integrado com banco de dados usando Pandas.</p>
+                        </div>
+                    </div>
+                    <div class="github-redirect">
+                        <p>Acesse meu GitHub para mais:</p>
+                        <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" class="neon-link">Gabriel Menezes</a>
+                    </div>
+                </section>
+
+                <!-- TERCEIRO CARD: SOBRE MIM (COM TÓPICOS) -->
+                <section id="sobre-mim" class="card animate-on-scroll">
+                    <h2>Sobre Mim</h2>
+                    <div class="about-text">
+                        <p>⚡ Movido pelo desafio de criar a lógica por trás dos sistemas.</p>
+                        <ul class="about-list">
+                            <li>🖥️ Desenvolvedor backend.</li>
+                            <li>🗄️ Foco na modelagem de dados e na construção de APIs seguras e eficientes, garantindo robustez de ponta a ponta.</li>
+                        </ul>
+                        <p class="about-footer-text">🚀 Atualmente, estou expandindo minhas competências em automação de processos enquanto me graduo em Gestão da Tecnologia da Informação 🎓, unindo visão técnica e estratégica para entregar soluções reais.</p>
+                    </div>
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <a href="#inicio" class="back-to-top">Voltar ao topo</a>
+            <div class="footer-socials">
+                <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/gabriel-menezes-9367793a1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
