@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gabriel Menezes | Portfólio Backend</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- FontAwesome para ícones do GitHub e LinkedIn -->
+    <title>Gabriel Menezes | Desenvolvedor Backend</title>
+    <meta name="description" content="Portfólio de Gabriel Menezes, desenvolvedor backend focado em Python, FastAPI e modelagem de dados.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body id="inicio">
 
     <!-- HEADER -->
     <header class="header">
         <div class="header-container">
-            <a href="#inicio" class="logo">Gabriel Menezes</a>
+            <a href="#inicio" class="logo">gabriel<span class="logo-dot">.</span>menezes</a>
             <nav class="nav-links">
-                <a href="#sobre-mim">Sobre Mim</a>
-                <a href="#projetos">Meus Projetos</a>
+                <a href="#stack">stack</a>
+                <a href="#websites">websites</a>
+                <a href="#projetos">projetos</a>
+                <a href="#sobre-mim">sobre</a>
                 <div class="header-socials">
                     <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                         <i class="fab fa-github"></i>
@@ -29,106 +34,147 @@
         </div>
     </header>
 
-    <!-- CONTAINER PRINCIPAL COM LAYOUT DE DUAS COLUNAS (SIDEBAR + CONTEÚDO) -->
-    <div class="page-layout">
+    <main class="page">
 
-        <!-- COLUNA ESQUERDA: PERFIL / SIDEBAR -->
-        <aside class="sidebar-card card animate-on-scroll">
-            <div class="profile-avatar-container">
-                <!-- Substitua 'assets/avatar.jpg' pelo caminho da foto do seu rosto, ou cole o link direto de uma imagem -->
-                <img src="assets/avatar.jpg" alt="Foto de Gabriel Menezes" class="profile-avatar" onerror="this.src='https://via.placeholder.com/150/1a052b/c084fc?text=GM'">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-avatar hero-reveal">
+                <img src="assets/avatar.jpg" alt="Foto de Gabriel Menezes" class="profile-avatar" onerror="this.src='https://via.placeholder.com/160/10141b/5eead4?text=GM'">
             </div>
-            
-            <div class="info-content">
-                <h3>Gabriel Menezes</h3>
-                <p class="profile-role">Desenvolvedor Backend</p>
-                <br>
-                <p class="section-title-mini">Estudando:</p>
-                <p>🐍 Python</p>
-                <p>☕ Java</p>
-                <p>🗄️ Banco de Dados</p>
-                <br>
-                <p class="section-title-mini">Localização:</p>
-                <p>📍 Coronel Fabriciano - MG</p>
-                <p>🇧🇷 Brasil</p>
-                <br>
-                <p>📧 <a href="mailto:gabriel26guedes@gmail.com" class="neon-link">gabriel26guedes@gmail.com</a></p>
+
+            <div class="hero-body">
+                <p class="hero-status hero-reveal">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    Disponível para novos projetos
+                </p>
+
+                <h1 class="hero-name hero-reveal">Gabriel Menezes</h1>
+                <p class="hero-role hero-reveal"><span id="typed-role"></span><span class="hero-cursor" aria-hidden="true"></span></p>
+
+                <p class="hero-bio hero-reveal">
+                    Estudante de Gestão da Tecnologia da Informação, construindo APIs e sistemas com
+                    Python. Interesse em modelagem de dados, segurança e arquitetura backend.
+                </p>
+
+                <div class="hero-meta hero-reveal">
+                    <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Coronel Fabriciano, MG — Brasil</span>
+                    <a class="meta-item meta-link" href="mailto:gabriel26guedes@gmail.com"><i class="fa-solid fa-envelope"></i> gabriel26guedes@gmail.com</a>
+                </div>
             </div>
-        </aside>
+        </section>
 
-        <!-- COLUNA DIREITA: CONTEÚDO PRINCIPAL (TECNOLOGIAS, PROJETOS E SOBRE MIM) -->
-        <main class="content-container">
+        <!-- TECNOLOGIAS -->
+        <section id="stack" class="panel">
+            <div class="window-bar">
+                <span class="window-dots"><span></span><span></span><span></span></span>
+                <span class="window-title">tech-stack.json</span>
+            </div>
+            <div class="panel-body">
+                <div class="stack-row">
+                    <span class="stack-key">linguagem</span>
+                    <span class="stack-value">
+                        <span class="chip">Python</span>
+                    </span>
+                </div>
+                <div class="stack-row">
+                    <span class="stack-key">frameworks_apis</span>
+                    <span class="stack-value">
+                        <span class="chip">FastAPI</span>
+                        <span class="chip">Uvicorn</span>
+                    </span>
+                </div>
+                <div class="stack-row">
+                    <span class="stack-key">banco_de_dados</span>
+                    <span class="stack-value">
+                        <span class="chip">SQLite</span>
+                        <span class="chip">SQL</span>
+                    </span>
+                </div>
+                <div class="stack-row">
+                    <span class="stack-key">seguranca</span>
+                    <span class="stack-value">
+                        <span class="chip">Bcrypt (hash de senhas)</span>
+                    </span>
+                </div>
+            </div>
+        </section>
 
-            <!-- PRIMEIRO CARD: TECNOLOGIAS E FERRAMENTAS -->
-            <section class="card full-width-card animate-on-scroll">
-                <h2>🛠️ Tecnologias e Ferramentas</h2>
-                <div class="tech-grid">
-                    <div class="tech-item">
-                        <strong>Linguagem:</strong> Python
+        <!-- WEBSITES -->
+        <section id="websites" class="panel">
+            <div class="window-bar">
+                <span class="window-dots"><span></span><span></span><span></span></span>
+                <span class="window-title">websites/</span>
+            </div>
+            <div class="panel-body">
+                <div class="site-grid">
+                    <a class="site-card" href="https://calculadora-inteligente-sigma.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        <div class="site-card-head">
+                            <span class="site-name">Nexus Calc</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                        <span class="site-url">calculadora-inteligente-sigma.vercel.app</span>
+                        <p class="site-desc">Calculadora inteligente construída com FastAPI, feita para resolver operações lógicas e matemáticas de forma rápida e automatizada.</p>
+                    </a>
+
+                    <a class="site-card" href="https://nexus-finance-lemon.vercel.app/#/login" target="_blank" rel="noopener noreferrer">
+                        <div class="site-card-head">
+                            <span class="site-name">Nexus Finance</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                        <span class="site-url">nexus-finance-lemon.vercel.app</span>
+                        <p class="site-desc">Plataforma de controle financeiro pessoal: registro de transações, categorias e metas de reserva com acompanhamento de progresso.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJETOS -->
+        <section id="projetos" class="panel">
+            <div class="window-bar">
+                <span class="window-dots"><span></span><span></span><span></span></span>
+                <span class="window-title">projetos/</span>
+            </div>
+            <div class="panel-body">
+                <div class="project-list">
+                    <div class="project-item">
+                        <h3><a href="https://calculadora-inteligente-sigma.vercel.app/" target="_blank" rel="noopener noreferrer">Calculadora Inteligente (FastAPI)</a></h3>
+                        <p>Projetada para processar operações lógicas e de cálculo de forma rápida, eficiente e automatizada.</p>
                     </div>
-                    <div class="tech-item">
-                        <strong>Frameworks & APIs:</strong>
-                        <span>FastAPI</span>, <span>Uvicorn</span>
+                    <div class="project-item">
+                        <h3><a href="https://github.com/GMenezsz/SecureBankAPI" target="_blank" rel="noopener noreferrer">SecureBankAPI</a></h3>
+                        <p>Sistema bancário desenvolvido em Python focado em segurança, criptografia de senhas (hash) e persistência de dados com SQLite.</p>
                     </div>
-                    <div class="tech-item">
-                        <strong>Banco de Dados:</strong>
-                        <span>SQLite</span>, <span>SQL</span>
-                    </div>
-                    <div class="tech-item">
-                        <strong>Manipulação de Dados:</strong>
-                        <span>Pandas</span>
-                    </div>
-                    <div class="tech-item">
-                        <strong>Segurança & Boas Práticas:</strong>
-                        <span>Bcrypt (Hash de senhas)</span>
+                    <div class="project-item">
+                        <h3><a href="https://github.com/GMenezsz/Automacao-de-Planilhas-Excel" target="_blank" rel="noopener noreferrer">Automação de Planilhas</a></h3>
+                        <p>Sistema em Python para automação de leitura, processamento e exportação de planilhas Excel (.xlsx) integrado com banco de dados usando Pandas.</p>
                     </div>
                 </div>
-            </section>
-
-            <!-- GRID INTERNO: PROJETOS E SOBRE MIM -->
-            <div class="grid-two-columns">
-                
-                <!-- SEGUNDO CARD: MEUS PROJETOS -->
-                <section id="projetos" class="card animate-on-scroll">
-                    <h2>🚀 Projetos em Destaque</h2>
-                    <div class="project-list">
-                        <div class="project-item">
-                            <h3><a href="https://calculadora-inteligente-sigma.vercel.app/" target="_blank" rel="noopener noreferrer">🧮 Calculadora Inteligente (FastAPI)</a></h3>
-                            <p>Projetada para processar operações lógicas e de cálculo de forma rápida, eficiente e automatizada.</p>
-                        </div>
-                        <div class="project-item">
-                            <h3><a href="https://github.com/GMenezsz/SecureBankAPI" target="_blank" rel="noopener noreferrer">🏦 SecureBankAPI</a></h3>
-                            <p>Sistema bancário desenvolvido em Python focado em segurança, criptografia de senhas (hash) e persistência de dados com SQLite.</p>
-                        </div>
-                        <div class="project-item">
-                            <h3><a href="https://github.com/GMenezsz/Automacao-de-Planilhas-Excel" target="_blank" rel="noopener noreferrer">📊 Automação de Planilhas</a></h3>
-                            <p>Sistema em Python para automação de leitura, processamento e exportação de planilhas Excel (.xlsx) integrado com banco de dados usando Pandas.</p>
-                        </div>
-                    </div>
-                    <div class="github-redirect">
-                        <p>Acesse meu GitHub para mais:</p>
-                        <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" class="neon-link">Gabriel Menezes</a>
-                    </div>
-                </section>
-
-                <!-- TERCEIRO CARD: SOBRE MIM (COM TÓPICOS) -->
-                <section id="sobre-mim" class="card animate-on-scroll">
-                    <h2>Sobre Mim</h2>
-                    <div class="about-text">
-                        <p>⚡ Movido pelo desafio de criar a lógica por trás dos sistemas.</p>
-                        <ul class="about-list">
-                            <li>🖥️ Desenvolvedor backend.</li>
-                            <li>🗄️ Foco na modelagem de dados e na construção de APIs seguras e eficientes, garantindo robustez de ponta a ponta.</li>
-                        </ul>
-                        <p class="about-footer-text">🚀 Atualmente, estou expandindo minhas competências em automação de processos enquanto me graduo em Gestão da Tecnologia da Informação 🎓, unindo visão técnica e estratégica para entregar soluções reais.</p>
-                    </div>
-                </section>
-
+                <div class="github-redirect">
+                    <p>Acesse meu GitHub para mais:</p>
+                    <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" class="neon-link">Gabriel Menezes</a>
+                </div>
             </div>
+        </section>
 
-        </main>
+        <!-- SOBRE MIM -->
+        <section id="sobre-mim" class="panel">
+            <div class="window-bar">
+                <span class="window-dots"><span></span><span></span><span></span></span>
+                <span class="window-title">sobre.md</span>
+            </div>
+            <div class="panel-body">
+                <div class="about-text">
+                    <p>Movido pelo desafio de criar a lógica por trás dos sistemas.</p>
+                    <ul class="about-list">
+                        <li>Desenvolvedor backend, com foco em modelagem de dados e construção de APIs seguras e eficientes.</li>
+                        <li>Busco robustez de ponta a ponta: do banco de dados até a resposta da API.</li>
+                    </ul>
+                    <p class="about-footer-text">Atualmente expandindo competências em automação de processos enquanto me graduo em Gestão da Tecnologia da Informação, unindo visão técnica e estratégica para entregar soluções reais.</p>
+                </div>
+            </div>
+        </section>
 
-    </div>
+    </main>
 
     <!-- FOOTER -->
     <footer class="footer">
