@@ -3,18 +3,28 @@
    ============================================ */
 :root {
     --bg: #0a0d12;
-    --bg-panel: #10141b;
-    --bg-panel-hover: #131a23;
-    --bg-chip: #161d27;
-    --border: #1e2630;
-    --border-hover: #2c3947;
-    --text: #e6edf3;
-    --text-dim: #8b96a3;
+    --bg-panel: #12171f;
+    --bg-panel-hover: #161d27;
+    --bg-chip: #1a222d;
+    --border: #232d3a;
+    --border-hover: #35455a;
+    --text: #eef2f6;
+    --text-dim: #9aa6b4;
     --text-faint: #5c6675;
     --accent: #5eead4;
     --accent-strong: #2dd4bf;
     --accent-soft: rgba(94, 234, 212, 0.1);
     --status: #4ade80;
+
+    --dot-red: #ff5f56;
+    --dot-amber: #ffbd2e;
+    --dot-green: #27c93f;
+
+    --blue: #60a5fa;
+    --violet: #a78bfa;
+    --pink: #f472b6;
+    --amber: #fbbf24;
+
     --radius: 8px;
     --mono: 'JetBrains Mono', 'Consolas', monospace;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -171,6 +181,16 @@ a {
 
 .hero-avatar {
     flex-shrink: 0;
+    position: relative;
+}
+
+.hero-avatar::before {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    background: radial-gradient(circle, rgba(94, 234, 212, 0.25), rgba(96, 165, 250, 0.12) 60%, transparent 75%);
+    filter: blur(6px);
+    z-index: -1;
 }
 
 .profile-avatar {
@@ -216,8 +236,11 @@ a {
     font-weight: 700;
     font-size: clamp(1.9rem, 4vw, 2.6rem);
     letter-spacing: -0.01em;
-    color: var(--text);
     margin-bottom: 0.4rem;
+    background: linear-gradient(100deg, var(--text) 40%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .hero-role {
@@ -320,10 +343,25 @@ a {
 }
 
 .window-dots span {
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: var(--border-hover);
+    display: inline-block;
+}
+
+.window-dots span:nth-child(1) {
+    background: var(--dot-red);
+    box-shadow: 0 0 6px rgba(255, 95, 86, 0.5);
+}
+
+.window-dots span:nth-child(2) {
+    background: var(--dot-amber);
+    box-shadow: 0 0 6px rgba(255, 189, 46, 0.5);
+}
+
+.window-dots span:nth-child(3) {
+    background: var(--dot-green);
+    box-shadow: 0 0 6px rgba(39, 201, 63, 0.5);
 }
 
 .window-title {
@@ -351,8 +389,9 @@ a {
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0.3rem 1rem;
-    padding: 0.75rem 0;
+    padding: 0.75rem 0 0.75rem 0.9rem;
     border-bottom: 1px solid var(--border);
+    border-left: 2px solid var(--row-color, var(--border));
 }
 
 .stack-row:last-child {
@@ -367,7 +406,7 @@ a {
 .stack-key {
     font-family: var(--mono);
     font-size: 0.85rem;
-    color: var(--text-faint);
+    color: var(--row-color, var(--text-faint));
     min-width: 150px;
 }
 
@@ -385,7 +424,17 @@ a {
     font-size: 0.85rem;
     padding: 0.25rem 0.65rem;
     border-radius: 5px;
+    transition: border-color 0.2s ease;
 }
+
+.stack-row:hover .chip {
+    border-color: var(--row-color, var(--border-hover));
+}
+
+.stack-row--lang { --row-color: var(--amber); }
+.stack-row--frameworks { --row-color: var(--accent); }
+.stack-row--db { --row-color: var(--blue); }
+.stack-row--security { --row-color: var(--pink); }
 
 /* ============================================
    WEBSITES
@@ -403,16 +452,21 @@ a {
     text-decoration: none;
     background: var(--bg-chip);
     border: 1px solid var(--border);
+    border-top: 3px solid var(--card-color, var(--accent));
     border-radius: var(--radius);
     padding: 1.2rem 1.3rem;
     transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
 }
 
 .site-card:hover {
-    border-color: var(--accent);
+    border-color: var(--card-color, var(--accent));
+    border-top-color: var(--card-color, var(--accent));
     background: var(--bg-panel-hover);
     transform: translateY(-2px);
 }
+
+.site-card--calc { --card-color: var(--blue); }
+.site-card--finance { --card-color: var(--status); }
 
 .site-card-head {
     display: flex;
@@ -435,13 +489,13 @@ a {
 }
 
 .site-card:hover .site-card-head i {
-    color: var(--accent);
+    color: var(--card-color, var(--accent));
 }
 
 .site-url {
     font-family: var(--mono);
     font-size: 0.78rem;
-    color: var(--accent);
+    color: var(--card-color, var(--accent));
 }
 
 .site-desc {
