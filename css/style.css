@@ -175,7 +175,7 @@ a {
 }
 
 .header-container {
-    max-width: 1120px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -246,7 +246,7 @@ a {
    LAYOUT
    ============================================ */
 .page {
-    max-width: 1120px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 130px 5% 60px;
 }
@@ -263,14 +263,14 @@ a {
 
 .master-card-body {
     display: grid;
-    grid-template-columns: 360px 1fr;
+    grid-template-columns: 380px 1fr;
 }
 
 /* ============================================
    SIDEBAR: PERFIL
    ============================================ */
 .profile-sidebar {
-    padding: 2.4rem 1.7rem;
+    padding: 2.6rem 2rem;
     border-right: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.012);
     display: flex;
@@ -307,7 +307,7 @@ a {
     align-items: center;
     gap: 0.5rem;
     font-family: var(--mono);
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     color: var(--status);
     margin-bottom: 1rem;
     white-space: nowrap;
@@ -331,7 +331,7 @@ a {
 .hero-name {
     font-family: var(--mono);
     font-weight: 700;
-    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    font-size: clamp(1.5rem, 2.1vw, 1.8rem);
     letter-spacing: -0.01em;
     margin-bottom: 0.4rem;
     background: linear-gradient(100deg, var(--text) 35%, var(--blue) 100%);
@@ -423,8 +423,8 @@ a {
 .profile-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.4rem;
-    padding: 1.8rem;
+    gap: 1.7rem;
+    padding: 2.2rem;
     align-content: start;
 }
 
@@ -641,8 +641,8 @@ a {
    ============================================ */
 .project-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1rem;
     margin-bottom: 1.4rem;
 }
 
@@ -745,7 +745,7 @@ a {
 }
 
 .footer-container {
-    max-width: 1120px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
