@@ -570,7 +570,7 @@ a {
    ============================================ */
 .project-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0.85rem;
     margin-bottom: 1.4rem;
 }
