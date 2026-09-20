@@ -234,11 +234,15 @@ a {
 .hero-status {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     font-family: var(--mono);
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     color: var(--status);
     margin-bottom: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .status-dot {
