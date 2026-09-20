@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //     ordem: card -> perfil -> seções e itens -> digitação do nome/cargo
     //     -> (só no fim de tudo) status descriptografando
     // ==========================================================
-    function runEntrance() {
+    function runEntrance(onDecryptDone) {
         const wait = (ms) => new Promise((r) => setTimeout(r, ms));
         const statusWrap = document.getElementById("hero-status");
         const statusText = document.getElementById("decrypt-status");
@@ -234,37 +234,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!statusWrap || !statusText || !finalStatus) return;
                 statusWrap.classList.add("is-live");
                 return decryptText(statusText, finalStatus);
-            });
+            })
+            // 5) frase pronta -> a chuva de código começa a subir
+            .then(() => wait(300))
+            .then(() => { if (onDecryptDone) onDecryptDone(); });
     }
 
     // ==========================================================
-    // 2. FUNDO PERSISTENTE: CÓDIGOS SUBINDO O TEMPO TODO
+    // 2. FUNDO PERSISTENTE: CÓDIGOS SUBINDO (só começa após a descriptografia)
     // ==========================================================
     function startBackgroundMatrix() {
-        if (prefersReducedMotion) return;
+        const inactive = { start() {} };
+        if (prefersReducedMotion) return inactive;
         const canvas = document.getElementById("bg-matrix-canvas");
-        if (!canvas) return;
+        if (!canvas) return inactive;
 
         const ctx = canvas.getContext("2d");
         const chars = "アイウエオカキクケコサシスセソタチツテト0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$+-*/=%<>[]{}";
         let w = 0, h = 0, fontSize = 16, columns = 0, drops = [];
-        let running = true;
+        let started = false;   // só vira true quando a descriptografia termina
+        let running = false;
+        let raf = 0;
         let lastFrame = 0;
 
         // telas pequenas: letras maiores/menos colunas e menos quadros por segundo (economiza bateria)
         function isSmall() { return window.innerWidth < 700; }
+        function colStep() { return isSmall() ? 1.5 : 1; }
 
-        function setup() {
+        // fromBottom = true: todas as colunas começam ABAIXO da tela e sobem (entrada)
+        // fromBottom = false: recomeça espalhado (ex.: girou o celular com o efeito já rodando)
+        function setup(fromBottom) {
             w = canvas.width = window.innerWidth;
             h = canvas.height = window.innerHeight;
             fontSize = isSmall() ? 14 : 16;
-            const step = isSmall() ? 1.5 : 1; // pula colunas no mobile
-            columns = Math.floor(w / (fontSize * step));
-            drops = new Array(columns).fill(0).map(() => Math.random() * h);
+            columns = Math.floor(w / (fontSize * colStep()));
+            drops = new Array(columns).fill(0).map(() =>
+                fromBottom ? h + Math.random() * h * 0.7 : Math.random() * h
+            );
             ctx.fillStyle = "rgb(10, 13, 18)";
             ctx.fillRect(0, 0, w, h);
         }
-        setup();
+        setup(true);
 
         // só refaz o canvas quando a LARGURA muda (a barra de endereço do celular
         // altera a altura ao rolar e não deve reiniciar a animação)
@@ -275,29 +285,35 @@ document.addEventListener("DOMContentLoaded", () => {
             resizeTimer = setTimeout(() => {
                 if (window.innerWidth !== lastW) {
                     lastW = window.innerWidth;
-                    setup();
+                    setup(!started);
                 } else if (window.innerHeight > h) {
                     h = canvas.height = window.innerHeight;
                 }
             }, 150);
         });
 
+        function schedule() {
+            if (!raf) {
+                raf = requestAnimationFrame((t) => { raf = 0; draw(t); });
+            }
+        }
+
         // pausa quando a aba não está visível
         document.addEventListener("visibilitychange", () => {
-            running = !document.hidden;
-            if (running) requestAnimationFrame(draw);
+            running = started && !document.hidden;
+            if (running) schedule();
         });
 
         function draw(now) {
             if (!running) return;
             const minInterval = isSmall() ? 1000 / 30 : 0;
             if (now - lastFrame < minInterval) {
-                requestAnimationFrame(draw);
+                schedule();
                 return;
             }
             lastFrame = now;
 
-            const step = isSmall() ? 1.5 : 1;
+            const step = colStep();
             ctx.fillStyle = "rgba(10, 13, 18, 0.06)";
             ctx.fillRect(0, 0, w, h);
             ctx.font = fontSize + "px monospace";
@@ -312,9 +328,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            requestAnimationFrame(draw);
+            schedule();
         }
-        requestAnimationFrame(draw);
+
+        return {
+            // chamado uma única vez, quando a descriptografia da frase termina:
+            // as letras nascem embaixo da tela e sobem, e o efeito segue rodando
+            start() {
+                if (started) return;
+                started = true;
+                running = !document.hidden;
+                canvas.classList.add("is-on"); // fade-in suave do canvas
+                if (running) schedule();
+            }
+        };
     }
 
     // ==========================================================
@@ -346,9 +373,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // site abre direto: letras já sobem no fundo e a entrada do conteúdo começa na hora
+    const matrix = startBackgroundMatrix();
     trackHeaderHeight();
-    runEntrance();
-    startBackgroundMatrix();
+    runEntrance(matrix.start);
 
     // ==========================================================
     // 3. NAVEGAÇÃO SUAVE CUSTOMIZADA
