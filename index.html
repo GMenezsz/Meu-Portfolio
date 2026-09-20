@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <script>document.documentElement.classList.add("js");</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0a0d12">
     <meta name="color-scheme" content="dark">
@@ -56,9 +57,10 @@
                         <img src="assets/avatar.jpg" alt="Foto de Gabriel Menezes" class="profile-avatar" width="128" height="128" decoding="async" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Crect width='160' height='160' fill='%2310141b'/%3E%3Ctext x='50%25' y='54%25' fill='%235eead4' font-family='monospace' font-size='56' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3EGM%3C/text%3E%3C/svg%3E&quot;">
                     </div>
 
-                    <p class="hero-status hero-reveal">
+                    <p class="hero-status" id="hero-status">
                         <span class="status-dot" aria-hidden="true"></span>
-                        Disponível para novos projetos
+                        <span class="sr-only">Disponível para novos projetos</span>
+                        <span id="decrypt-status" aria-hidden="true">Disponível para novos projetos</span>
                     </p>
 
                     <h1 class="hero-name hero-reveal"><span id="typed-name"></span><span class="hero-cursor" id="name-cursor" aria-hidden="true"></span></h1>
