@@ -500,8 +500,7 @@ a {
    ============================================ */
 .site-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-    justify-content: start;
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.85rem;
 }
 
@@ -575,8 +574,7 @@ a {
    ============================================ */
 .project-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-    justify-content: start;
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.85rem;
     margin-bottom: 1.4rem;
 }
@@ -742,6 +740,18 @@ a {
     #projetos,
     #sobre-mim {
         grid-column: 1;
+    }
+
+    .site-grid,
+    .project-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .site-grid,
+    .project-list {
+        grid-template-columns: 1fr;
     }
 }
 
