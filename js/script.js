@@ -5,48 +5,236 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================
     // 1. DIGITAÇÃO DO NOME E DO CARGO (dispara assim que a página abre)
     // ==========================================================
-    function startTypingSequence() {
-        const nameEl = document.getElementById("typed-name");
-        const roleEl = document.getElementById("typed-role");
-        const nameCursor = document.getElementById("name-cursor");
-        const roleCursor = document.getElementById("role-cursor");
+    function startTypingSequence(startDelay = 150) {
+        return new Promise((resolve) => {
+            const nameEl = document.getElementById("typed-name");
+            const roleEl = document.getElementById("typed-role");
+            const nameCursor = document.getElementById("name-cursor");
+            const roleCursor = document.getElementById("role-cursor");
 
-        const nomeTexto = "Gabriel Menezes";
-        const roleTexto = "Desenvolvedor Backend";
+            const nomeTexto = "Gabriel Menezes";
+            const roleTexto = "Desenvolvedor Backend";
 
+            if (!nameEl || !roleEl) { resolve(); return; }
+
+            if (prefersReducedMotion) {
+                nameEl.textContent = nomeTexto;
+                roleEl.textContent = roleTexto;
+                resolve();
+                return;
+            }
+
+            if (roleCursor) roleCursor.style.display = "none";
+
+            let i = 0;
+            function digitarNome() {
+                if (i <= nomeTexto.length) {
+                    nameEl.textContent = nomeTexto.slice(0, i);
+                    i++;
+                    setTimeout(digitarNome, 55);
+                } else {
+                    if (nameCursor) nameCursor.style.display = "none";
+                    if (roleCursor) roleCursor.style.display = "inline-block";
+                    setTimeout(digitarRole, 250);
+                }
+            }
+
+            let j = 0;
+            function digitarRole() {
+                if (j <= roleTexto.length) {
+                    roleEl.textContent = roleTexto.slice(0, j);
+                    j++;
+                    setTimeout(digitarRole, 45);
+                } else {
+                    resolve(); // terminou de digitar
+                }
+            }
+
+            setTimeout(digitarNome, startDelay);
+        });
+    }
+
+    // ==========================================================
+    // 1.1 EFEITO DE DESCRIPTOGRAFIA (frase toda embaralhada, letra por letra
+    //     vai sendo "achada" da esquerda p/ direita; o resto segue rolando)
+    // ==========================================================
+    function decryptText(el, finalText) {
+        return new Promise((resolve) => {
+            const glyphs = "!<>-_\\/[]{}=+*^?#%&$@0123456789ABCDEF";
+            const rand = () => glyphs[Math.floor(Math.random() * glyphs.length)];
+            const letters = Array.from(finalText);
+            const total = letters.filter((ch) => ch !== " ").length;
+
+            const HOLD = 700;          // tempo inicial com tudo embaralhado
+            const RESOLVE_EVERY = 85;  // ms para "achar" cada letra
+            const SCRAMBLE_EVERY = 45; // ms entre cada troca de símbolos
+
+            el.textContent = "";
+            const fixedSpan = document.createElement("span");
+            const noiseSpan = document.createElement("span");
+            noiseSpan.className = "dc-noise";
+            el.append(fixedSpan, noiseSpan);
+
+            function render(resolvedCount) {
+                let cut = 0, seen = 0;
+                while (cut < letters.length && seen < resolvedCount) {
+                    if (letters[cut] !== " ") seen++;
+                    cut++;
+                }
+                fixedSpan.textContent = letters.slice(0, cut).join("");
+                let noise = "";
+                for (let x = cut; x < letters.length; x++) {
+                    noise += letters[x] === " " ? " " : rand();
+                }
+                noiseSpan.textContent = noise;
+            }
+
+            const start = performance.now();
+            let lastScramble = -Infinity;
+
+            function frame(now) {
+                const elapsed = now - start;
+                const resolved = Math.max(0, Math.floor((elapsed - HOLD) / RESOLVE_EVERY));
+
+                if (resolved >= total) {
+                    fixedSpan.textContent = finalText;
+                    noiseSpan.textContent = "";
+                    resolve();
+                    return;
+                }
+                if (now - lastScramble >= SCRAMBLE_EVERY) {
+                    lastScramble = now;
+                    render(resolved);
+                }
+                requestAnimationFrame(frame);
+            }
+
+            render(0);
+            requestAnimationFrame(frame);
+        });
+    }
+
+    // ==========================================================
+    // 1.2 ENTRADA ORQUESTRADA DE TODO O CONTEÚDO DO CARD
+    //     ordem: card -> perfil -> seções e itens -> digitação do nome/cargo
+    //     -> (só no fim de tudo) status descriptografando
+    // ==========================================================
+    function runEntrance() {
+        const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+        const statusWrap = document.getElementById("hero-status");
+        const statusText = document.getElementById("decrypt-status");
+        const finalStatus = statusText ? statusText.textContent.trim() : "";
+
+        // sem animações: mostra tudo pronto
         if (prefersReducedMotion) {
-            if (nameEl) nameEl.textContent = nomeTexto;
-            if (roleEl) roleEl.textContent = roleTexto;
+            startTypingSequence();
+            if (statusWrap) statusWrap.classList.add("is-live");
             return;
         }
 
-        if (roleCursor) roleCursor.style.display = "none";
+        const DUR = 600;
+        let loadEnd = 0;
+        const mark = (d) => { loadEnd = Math.max(loadEnd, d + DUR); };
+        const play = (el, d) => {
+            el.style.setProperty("--d", d + "ms");
+            el.classList.add("in");
+            mark(d);
+        };
 
-        let i = 0;
-        function digitarNome() {
-            if (!nameEl) return;
-            if (i <= nomeTexto.length) {
-                nameEl.textContent = nomeTexto.slice(0, i);
-                i++;
-                setTimeout(digitarNome, 55);
+        // prepara o status: já embaralhado, invisível até a hora dele
+        if (statusText && finalStatus) {
+            statusText.textContent = "";
+            const pre = document.createElement("span");
+            pre.className = "dc-noise";
+            pre.textContent = finalStatus.replace(/\S/g, "#");
+            statusText.appendChild(pre);
+        }
+
+        // 0) o card em si
+        const card = document.querySelector(".master-card");
+        if (card) {
+            card.classList.add("arrive");
+            play(card, 0);
+        }
+
+        // 1) itens do perfil (lateral)
+        const heroItems = Array.from(document.querySelectorAll(".profile-sidebar .hero-reveal"));
+        heroItems.forEach((el, i) => {
+            const d = 250 + i * 90;
+            el.style.setProperty("--d", d + "ms");
+            mark(d);
+        });
+        const nameHeroEl = document.querySelector(".hero-name");
+        const nameDelay = 250 + Math.max(0, heroItems.indexOf(nameHeroEl)) * 90;
+
+        // 2) seções + itens internos
+        const sections = Array.from(document.querySelectorAll(".content-section"));
+        const innerOf = (sec) =>
+            Array.from(sec.querySelectorAll(
+                ".stack-row, .site-card, .project-item, .github-redirect, .about-text > *"
+            ));
+
+        const deferred = new Map();
+        const vh = window.innerHeight;
+
+        sections.forEach((sec, idx) => {
+            const items = innerOf(sec);
+            sec.classList.add("arrive");
+            items.forEach((it) => it.classList.add("arrive"));
+
+            const reveal = (base, innerStart) => {
+                play(sec, base);
+                items.forEach((it, k) => play(it, base + innerStart + k * 60));
+            };
+
+            // o que já está na tela entra na sequência inicial;
+            // o que está abaixo da dobra entra quando for rolado até lá
+            if (sec.getBoundingClientRect().top < vh - 40) {
+                reveal(450 + idx * 150, 200);
             } else {
-                if (nameCursor) nameCursor.style.display = "none";
-                if (roleCursor) roleCursor.style.display = "inline-block";
-                setTimeout(digitarRole, 250);
+                deferred.set(sec, () => reveal(0, 150));
+            }
+        });
+
+        if (deferred.size) {
+            if ("IntersectionObserver" in window) {
+                const io = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((en) => {
+                            if (en.isIntersecting) {
+                                io.unobserve(en.target);
+                                deferred.get(en.target)();
+                            }
+                        });
+                    },
+                    { threshold: 0.06, rootMargin: "0px 0px -6% 0px" }
+                );
+                deferred.forEach((_, sec) => io.observe(sec));
+            } else {
+                deferred.forEach((fn) => fn());
             }
         }
 
-        let j = 0;
-        function digitarRole() {
-            if (!roleEl) return;
-            if (j <= roleTexto.length) {
-                roleEl.textContent = roleTexto.slice(0, j);
-                j++;
-                setTimeout(digitarRole, 45);
+        // remove as classes ao terminar cada animação (devolve o hover normal aos cards)
+        document.addEventListener("animationend", (e) => {
+            const el = e.target;
+            if (e.animationName === "arrive-in" && el.classList.contains("arrive")) {
+                el.classList.remove("arrive", "in");
+                el.style.removeProperty("--d");
             }
-        }
+        });
 
-        setTimeout(digitarNome, 150);
+        // 3) digitação do nome e cargo (começa quando o nome aparece)
+        const typing = startTypingSequence(nameDelay + 250);
+
+        // 4) só depois de TUDO acima: status descriptografando
+        Promise.all([typing, wait(loadEnd)])
+            .then(() => wait(350))
+            .then(() => {
+                if (!statusWrap || !statusText || !finalStatus) return;
+                statusWrap.classList.add("is-live");
+                return decryptText(statusText, finalStatus);
+            });
     }
 
     // ==========================================================
@@ -157,10 +345,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // site abre direto: sem tela de carregamento, letras já sobem no fundo
-    // e o texto do nome/cargo já começa a digitar imediatamente
+    // site abre direto: letras já sobem no fundo e a entrada do conteúdo começa na hora
     trackHeaderHeight();
-    startTypingSequence();
+    runEntrance();
     startBackgroundMatrix();
 
     // ==========================================================
