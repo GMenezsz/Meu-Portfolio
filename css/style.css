@@ -370,11 +370,11 @@ a {
 }
 
 #websites {
-    grid-column: 1;
+    grid-column: 1 / -1;
 }
 
 #projetos {
-    grid-column: 2;
+    grid-column: 1 / -1;
 }
 
 #sobre-mim {
