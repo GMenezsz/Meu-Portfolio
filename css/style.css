@@ -421,17 +421,35 @@ a {
    CONTEUDO (secoes a direita)
    ============================================ */
 .profile-content {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+    padding: 1.8rem;
+    align-content: start;
 }
 
 .content-section {
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.012);
     scroll-margin-top: 90px;
 }
 
-.content-section:last-child {
-    border-bottom: none;
+#stack {
+    grid-column: 1 / -1;
+}
+
+#websites {
+    grid-column: 1;
+}
+
+#projetos {
+    grid-column: 2;
+}
+
+#sobre-mim {
+    grid-column: 1;
 }
 
 .window-bar {
@@ -623,7 +641,7 @@ a {
    ============================================ */
 .project-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 1.1rem;
     margin-bottom: 1.4rem;
 }
@@ -778,6 +796,20 @@ a {
 @media (max-width: 720px) {
     .site-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .profile-content {
+        grid-template-columns: 1fr;
+        padding: 1.4rem;
+    }
+
+    #stack,
+    #websites,
+    #projetos,
+    #sobre-mim {
+        grid-column: 1;
     }
 }
 
