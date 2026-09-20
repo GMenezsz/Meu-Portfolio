@@ -421,11 +421,10 @@ a {
    CONTEUDO (secoes a direita)
    ============================================ */
 .profile-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     padding: 2.2rem;
-    align-content: start;
 }
 
 .content-section {
@@ -434,22 +433,6 @@ a {
     overflow: hidden;
     background: rgba(255, 255, 255, 0.012);
     scroll-margin-top: 90px;
-}
-
-#stack {
-    grid-column: 1 / -1;
-}
-
-#websites {
-    grid-column: 1;
-}
-
-#projetos {
-    grid-column: 2;
-}
-
-#sobre-mim {
-    grid-column: 1;
 }
 
 .window-bar {
@@ -571,7 +554,7 @@ a {
    ============================================ */
 .site-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1rem;
 }
 
@@ -641,7 +624,7 @@ a {
    ============================================ */
 .project-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin-bottom: 1.4rem;
 }
@@ -793,28 +776,24 @@ a {
     }
 }
 
-@media (max-width: 720px) {
-    .site-grid {
-        grid-template-columns: 1fr;
+@media (max-width: 700px) {
+    .profile-content {
+        padding: 1.4rem;
     }
 }
 
-@media (max-width: 700px) {
-    .profile-content {
-        grid-template-columns: 1fr;
-        padding: 1.4rem;
-    }
-
-    #stack,
-    #websites,
-    #projetos,
-    #sobre-mim {
-        grid-column: 1;
+@media (max-width: 1000px) {
+    .project-list {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 640px) {
     .project-list {
+        grid-template-columns: 1fr;
+    }
+
+    .site-grid {
         grid-template-columns: 1fr;
     }
 }
