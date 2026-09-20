@@ -50,7 +50,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================
-    // 2. ANIMAÇÃO DE ENTRADA: CÓDIGOS VERDES SUBINDO (estilo Matrix)
+    // 2. FUNDO PERSISTENTE: CÓDIGOS SUBINDO O TEMPO TODO
+    // ==========================================================
+    function startBackgroundMatrix() {
+        if (prefersReducedMotion) return;
+        const canvas = document.getElementById("bg-matrix-canvas");
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+        let w, h;
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        const fontSize = 16;
+        const chars = "アイウエオカキクケコサシスセソタチツテト0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$+-*/=%<>[]{}";
+        const columns = Math.floor(w / fontSize);
+        const drops = new Array(columns).fill(0).map(() => Math.random() * h);
+
+        function draw() {
+            ctx.fillStyle = "rgba(10, 13, 18, 0.06)";
+            ctx.fillRect(0, 0, w, h);
+            ctx.font = fontSize + "px monospace";
+            ctx.fillStyle = "#2dd4bf";
+
+            for (let k = 0; k < columns; k++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(char, k * fontSize, drops[k]);
+                drops[k] -= fontSize * 0.35;
+                if (drops[k] < -fontSize) {
+                    drops[k] = h + Math.random() * 300;
+                }
+            }
+
+            requestAnimationFrame(draw);
+        }
+        requestAnimationFrame(draw);
+    }
+
+    // ==========================================================
+    // 3. ANIMAÇÃO DE ENTRADA: CÓDIGOS VERDES SUBINDO (estilo Matrix)
     // ==========================================================
     function runIntro() {
         const introEl = document.getElementById("intro-loader");
@@ -91,6 +134,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const startTime = performance.now();
         const RISE_DURATION = 1100;   // colunas sobem por 1.1s
         const TOTAL_DURATION = 2000;  // animação completa: 2s
+
+        // contador de porcentagem da animação de carregamento
+        function updatePercent() {
+            const percentEl = document.getElementById("intro-percent");
+            if (!percentEl) return;
+            const elapsed = performance.now() - startTime;
+            const pct = Math.min(100, Math.round((elapsed / TOTAL_DURATION) * 100));
+            percentEl.textContent = pct + "%";
+            if (running && pct < 100) {
+                requestAnimationFrame(updatePercent);
+            }
+        }
+        requestAnimationFrame(updatePercent);
 
         function draw() {
             if (!running) return;
@@ -136,9 +192,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     runIntro();
+    startBackgroundMatrix();
 
     // ==========================================================
-    // 3. NAVEGAÇÃO SUAVE CUSTOMIZADA
+    // 4. NAVEGAÇÃO SUAVE CUSTOMIZADA
     // ==========================================================
     const internalLinks = document.querySelectorAll('a[href^="#"]');
 
@@ -161,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ==========================================================
-    // 4. DESTAQUE DO LINK DE NAVEGAÇÃO CONFORME A SEÇÃO VISÍVEL
+    // 5. DESTAQUE DO LINK DE NAVEGAÇÃO CONFORME A SEÇÃO VISÍVEL
     // ==========================================================
     const sections = document.querySelectorAll("main.page section[id]");
     const navLinks = document.querySelectorAll(".nav-links a[href^='#']");
