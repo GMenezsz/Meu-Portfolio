@@ -146,7 +146,7 @@ a {
     height: 100%;
     width: 0%;
     background: var(--accent);
-    animation: introFill 1.5s ease forwards;
+    animation: introFill 0.85s ease forwards;
 }
 
 @keyframes introFill {
@@ -263,14 +263,14 @@ a {
 
 .master-card-body {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 360px 1fr;
 }
 
 /* ============================================
    SIDEBAR: PERFIL
    ============================================ */
 .profile-sidebar {
-    padding: 2.4rem 1.9rem;
+    padding: 2.4rem 1.7rem;
     border-right: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.012);
     display: flex;
@@ -307,9 +307,10 @@ a {
     align-items: center;
     gap: 0.5rem;
     font-family: var(--mono);
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     color: var(--status);
     margin-bottom: 1rem;
+    white-space: nowrap;
 }
 
 .status-dot {
@@ -330,14 +331,15 @@ a {
 .hero-name {
     font-family: var(--mono);
     font-weight: 700;
-    font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
     letter-spacing: -0.01em;
     margin-bottom: 0.4rem;
-    background: linear-gradient(100deg, var(--text) 40%, var(--accent) 100%);
+    background: linear-gradient(100deg, var(--text) 35%, var(--blue) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     min-height: 1.3em;
+    white-space: nowrap;
 }
 
 .hero-role {
@@ -543,6 +545,8 @@ a {
 .stack-row--frameworks { --row-color: var(--accent); }
 .stack-row--db { --row-color: var(--blue); }
 .stack-row--security { --row-color: var(--pink); }
+.stack-row--tools { --row-color: var(--violet); }
+.stack-row--vcs { --row-color: var(--status); }
 
 /* ============================================
    WEBSITES
@@ -618,10 +622,23 @@ a {
    PROJETOS
    ============================================ */
 .project-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
     margin-bottom: 1.4rem;
+}
+
+.project-item {
+    background: var(--bg-chip);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.2rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.project-item:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
 }
 
 .project-item h3 a {
@@ -737,7 +754,7 @@ a {
 /* ============================================
    RESPONSIVIDADE
    ============================================ */
-@media (max-width: 860px) {
+@media (max-width: 900px) {
     .master-card-body {
         grid-template-columns: 1fr;
     }
@@ -760,6 +777,12 @@ a {
 
 @media (max-width: 720px) {
     .site-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .project-list {
         grid-template-columns: 1fr;
     }
 }
