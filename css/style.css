@@ -104,8 +104,13 @@ a {
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.22;
+    opacity: 0;                       /* invisível até a descriptografia terminar */
+    transition: opacity 1.8s ease;
     pointer-events: none;
+}
+
+.bg-matrix-canvas.is-on {
+    opacity: 0.22;
 }
 
 :focus-visible {
