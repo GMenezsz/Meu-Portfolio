@@ -259,7 +259,7 @@ a {
 .hero-name {
     font-family: var(--mono);
     font-weight: 700;
-    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    font-size: 1.45rem;
     letter-spacing: -0.01em;
     margin-bottom: 0.4rem;
     background: linear-gradient(100deg, var(--text) 35%, var(--blue) 100%);
@@ -267,6 +267,10 @@ a {
     background-clip: text;
     color: transparent;
     min-height: 1.3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .hero-role {
