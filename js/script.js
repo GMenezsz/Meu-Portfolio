@@ -89,8 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let running = true;
         const startTime = performance.now();
-        const RISE_DURATION = 3400;   // colunas sobem por 3.4s
-        const TOTAL_DURATION = 5000;  // animação completa: 5s
+        const RISE_DURATION = 1100;   // colunas sobem por 1.1s
+        const TOTAL_DURATION = 2000;  // animação completa: 2s
 
         function draw() {
             if (!running) return;
