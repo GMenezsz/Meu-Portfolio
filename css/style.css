@@ -30,7 +30,7 @@
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     /* layout fluido */
-    --maxw: 1900px;
+    --maxw: 1400px;
     --gutter: clamp(0.6rem, 2.2vw, 2rem);
     --header-h: 4.25rem; /* atualizado via JS com a altura real do header */
 
@@ -812,17 +812,17 @@ a {
 
 /* ---- Full HD+ / 2K / 4K: escala tudo proporcionalmente ---- */
 @media (min-width: 1920px) {
-    :root { --maxw: 2200px; }
+    :root { --maxw: 1560px; }
     html { font-size: 112.5%; }
 }
 
 @media (min-width: 2560px) {
-    :root { --maxw: 2600px; }
+    :root { --maxw: 1800px; }
     html { font-size: 125%; }
 }
 
 @media (min-width: 3400px) {
-    :root { --maxw: 3200px; }
+    :root { --maxw: 2300px; }
     html { font-size: 150%; }
 }
 
