@@ -192,7 +192,7 @@ a {
 
 .master-card-body {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 300px 1fr;
 }
 
 /* ============================================
@@ -239,7 +239,6 @@ a {
     font-size: 0.78rem;
     color: var(--status);
     margin-bottom: 1rem;
-    white-space: nowrap;
 }
 
 .status-dot {
@@ -260,7 +259,7 @@ a {
 .hero-name {
     font-family: var(--mono);
     font-weight: 700;
-    font-size: clamp(1.5rem, 2.1vw, 1.8rem);
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
     letter-spacing: -0.01em;
     margin-bottom: 0.4rem;
     background: linear-gradient(100deg, var(--text) 35%, var(--blue) 100%);
@@ -268,7 +267,6 @@ a {
     background-clip: text;
     color: transparent;
     min-height: 1.3em;
-    white-space: nowrap;
 }
 
 .hero-role {
