@@ -43,6 +43,12 @@ html {
     scroll-behavior: smooth;
 }
 
+html.intro-active,
+html.intro-active body {
+    overflow: hidden;
+    height: 100%;
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -76,6 +82,84 @@ a {
 }
 
 /* ============================================
+   INTRO: MATRIX LOADER
+   ============================================ */
+.intro-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.2rem;
+    opacity: 1;
+    transition: opacity 0.7s ease;
+}
+
+.intro-loader.intro-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#matrix-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.intro-status {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.intro-status.show {
+    opacity: 1;
+}
+
+.intro-status-text {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    text-transform: lowercase;
+}
+
+.intro-bar {
+    width: 220px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.intro-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    animation: introFill 1.5s ease forwards;
+}
+
+@keyframes introFill {
+    to { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro-loader {
+        display: none;
+    }
+}
+
+/* ============================================
    HEADER
    ============================================ */
 .header {
@@ -91,7 +175,7 @@ a {
 }
 
 .header-container {
-    max-width: 900px;
+    max-width: 1120px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -162,26 +246,42 @@ a {
    LAYOUT
    ============================================ */
 .page {
-    max-width: 900px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 150px 5% 60px;
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
+    padding: 130px 5% 60px;
 }
 
 /* ============================================
-   HERO
+   MASTER CARD (envolve perfil + conteudo)
    ============================================ */
-.hero {
+.master-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.master-card-body {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+
+/* ============================================
+   SIDEBAR: PERFIL
+   ============================================ */
+.profile-sidebar {
+    padding: 2.4rem 1.9rem;
+    border-right: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.012);
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 2rem;
 }
 
 .hero-avatar {
     flex-shrink: 0;
     position: relative;
+    margin-bottom: 1.3rem;
 }
 
 .hero-avatar::before {
@@ -202,18 +302,14 @@ a {
     background-color: var(--bg-panel);
 }
 
-.hero-body {
-    min-width: 0;
-}
-
 .hero-status {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     font-family: var(--mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--status);
-    margin-bottom: 0.9rem;
+    margin-bottom: 1rem;
 }
 
 .status-dot {
@@ -234,18 +330,19 @@ a {
 .hero-name {
     font-family: var(--mono);
     font-weight: 700;
-    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    font-size: clamp(1.5rem, 2.4vw, 1.85rem);
     letter-spacing: -0.01em;
     margin-bottom: 0.4rem;
     background: linear-gradient(100deg, var(--text) 40%, var(--accent) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    min-height: 1.3em;
 }
 
 .hero-role {
     font-family: var(--mono);
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     color: var(--accent);
     margin-bottom: 1rem;
     min-height: 1.4em;
@@ -267,15 +364,15 @@ a {
 
 .hero-bio {
     color: var(--text-dim);
-    font-size: 0.98rem;
-    max-width: 52ch;
+    font-size: 0.92rem;
     margin-bottom: 1.4rem;
 }
 
 .hero-meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: 100%;
 }
 
 .meta-item {
@@ -283,13 +380,14 @@ a {
     align-items: center;
     gap: 0.5rem;
     color: var(--text-dim);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     text-decoration: none;
 }
 
 .meta-item i {
     color: var(--text-faint);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    width: 1em;
 }
 
 .meta-link:hover {
@@ -300,7 +398,7 @@ a {
     color: var(--accent);
 }
 
-/* hero load-in: single orchestrated reveal, not scroll-based */
+/* reveal em orquestracao unica, disparado apos o loader */
 .hero-reveal {
     opacity: 0;
     transform: translateY(8px);
@@ -318,14 +416,20 @@ a {
 }
 
 /* ============================================
-   PANELS (terminal-window style cards)
+   CONTEUDO (secoes a direita)
    ============================================ */
-.panel {
-    background: var(--bg-panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
+.profile-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-section {
+    border-bottom: 1px solid var(--border);
     scroll-margin-top: 90px;
+}
+
+.content-section:last-child {
+    border-bottom: none;
 }
 
 .window-bar {
@@ -335,6 +439,10 @@ a {
     padding: 0.7rem 1.1rem;
     border-bottom: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.015);
+}
+
+.master-card-bar {
+    border-bottom: 1px solid var(--border);
 }
 
 .window-dots {
@@ -374,7 +482,7 @@ a {
     padding: 1.6rem 1.8rem 1.9rem;
 }
 
-.panel h2 {
+.content-section h2 {
     font-family: var(--mono);
     font-size: 1.05rem;
     color: var(--text);
@@ -441,7 +549,7 @@ a {
    ============================================ */
 .site-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 1rem;
 }
 
@@ -467,6 +575,7 @@ a {
 
 .site-card--calc { --card-color: var(--blue); }
 .site-card--finance { --card-color: var(--status); }
+.site-card--etl { --card-color: var(--violet); }
 
 .site-card-head {
     display: flex;
@@ -496,6 +605,7 @@ a {
     font-family: var(--mono);
     font-size: 0.78rem;
     color: var(--card-color, var(--accent));
+    word-break: break-all;
 }
 
 .site-desc {
@@ -600,7 +710,7 @@ a {
 }
 
 .footer-container {
-    max-width: 900px;
+    max-width: 1120px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -627,14 +737,30 @@ a {
 /* ============================================
    RESPONSIVIDADE
    ============================================ */
-@media (max-width: 720px) {
-    .site-grid {
+@media (max-width: 860px) {
+    .master-card-body {
         grid-template-columns: 1fr;
     }
 
-    .hero {
-        flex-direction: column;
-        gap: 1.2rem;
+    .profile-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-meta {
+        align-items: center;
+    }
+
+    .meta-item {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 720px) {
+    .site-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -650,11 +776,15 @@ a {
     }
 
     .page {
-        padding-top: 175px;
+        padding-top: 160px;
     }
 
     .panel-body {
         padding: 1.3rem 1.2rem 1.5rem;
+    }
+
+    .profile-sidebar {
+        padding: 1.8rem 1.4rem;
     }
 
     .stack-key {
