@@ -353,6 +353,195 @@ a {
     width: 100%;
 }
 
+/* ============================================
+   FORMAÇÃO (sidebar)
+   ============================================ */
+.hero-education {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: 100%;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border);
+}
+
+.hero-education-title {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+}
+
+.education-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.83rem;
+}
+
+.education-item i {
+    color: var(--accent);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+.education-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.education-degree {
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+.education-school {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+/* ============================================
+   BOTÃO: BAIXAR CURRÍCULO
+   ============================================ */
+.btn-download-cv {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-download-cv:hover,
+.btn-download-cv:focus-visible {
+    background: var(--accent);
+    color: #06120f;
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   MODAL: ESCOLHA DE CURRÍCULO
+   ============================================ */
+.cv-modal[hidden] { display: none; }
+
+.cv-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gutter);
+}
+
+.cv-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 9, 13, 0.72);
+    backdrop-filter: blur(2px);
+}
+
+.cv-modal-dialog {
+    position: relative;
+    width: min(480px, 100%);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.3rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.cv-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.cv-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.2rem;
+}
+
+.cv-modal-close:hover { color: var(--text); }
+
+.cv-modal-sub {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.cv-modal-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.cv-option {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+    text-decoration: none;
+    background: var(--bg-chip);
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.cv-option:hover,
+.cv-option:focus-visible {
+    border-color: var(--accent);
+    background: var(--bg-panel-hover);
+    transform: translateY(-1px);
+}
+
+.cv-option-head {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.92rem;
+}
+
+.cv-option-head i:first-child { color: var(--accent); }
+
+.cv-option-icon {
+    margin-left: auto;
+    color: var(--text-faint);
+    font-size: 0.85rem;
+}
+
+.cv-option p {
+    margin-top: 0.35rem;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
 .meta-item {
     display: inline-flex;
     align-items: flex-start;
