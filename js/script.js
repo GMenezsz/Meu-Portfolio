@@ -378,6 +378,40 @@ document.addEventListener("DOMContentLoaded", () => {
     runEntrance(matrix.start);
 
     // ==========================================================
+    // 2.2 MODAL: ESCOLHA DE CURRÍCULO (Backend / Dados)
+    // ==========================================================
+    (function setupCvModal() {
+        const openBtn = document.getElementById("cv-download-btn");
+        const modal = document.getElementById("cv-modal");
+        if (!openBtn || !modal) return;
+
+        let lastFocused = null;
+
+        function openModal() {
+            lastFocused = document.activeElement;
+            modal.hidden = false;
+            const firstOption = modal.querySelector(".cv-option");
+            if (firstOption) firstOption.focus();
+            document.addEventListener("keydown", onKeydown);
+        }
+
+        function closeModal() {
+            modal.hidden = true;
+            document.removeEventListener("keydown", onKeydown);
+            if (lastFocused) lastFocused.focus();
+        }
+
+        function onKeydown(e) {
+            if (e.key === "Escape") closeModal();
+        }
+
+        openBtn.addEventListener("click", openModal);
+        modal.querySelectorAll("[data-cv-close]").forEach((el) => {
+            el.addEventListener("click", closeModal);
+        });
+    })();
+
+    // ==========================================================
     // 3. NAVEGAÇÃO SUAVE CUSTOMIZADA
     // ==========================================================
     const internalLinks = document.querySelectorAll('a[href^="#"]');
