@@ -1,3 +1,7 @@
+if (typeof pdfjsLib !== "undefined") {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -412,36 +416,78 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
 
     // ==========================================================
-    // 2.3 MODAL: CERTIFICADO (visualização embutida, com animação)
+    // 2.3 VISUALIZADOR: CERTIFICADO (tela cheia, sem chrome de PDF)
     // ==========================================================
     (function setupCertModal() {
         const openBtn = document.getElementById("cert-open-btn");
         const modal = document.getElementById("cert-modal");
-        const iframe = document.getElementById("cert-modal-iframe");
-        if (!openBtn || !modal || !iframe) return;
+        const canvas = document.getElementById("cert-modal-canvas");
+        if (!openBtn || !modal || !canvas) return;
 
         const PDF_SRC = "assets/certificados/certificado-ciberseguranca-cisco.pdf";
+        const ctx = canvas.getContext("2d");
+
         let lastFocused = null;
+        let pdfDoc = null;
+        let currentRenderTask = null;
+        let resizeTimer = null;
+
+        // Renderiza a página do certificado num <canvas> puro (sem toolbar
+        // nativa de PDF do navegador), ocupando o máximo da tela disponível.
+        function renderPage() {
+            if (!pdfDoc) return;
+            pdfDoc.getPage(1).then((page) => {
+                const dpr = window.devicePixelRatio || 1;
+                const baseViewport = page.getViewport({ scale: 1 });
+                const scale = Math.min(
+                    window.innerWidth / baseViewport.width,
+                    window.innerHeight / baseViewport.height
+                ) * dpr;
+                const viewport = page.getViewport({ scale });
+
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                canvas.style.width = (viewport.width / dpr) + "px";
+                canvas.style.height = (viewport.height / dpr) + "px";
+
+                if (currentRenderTask) currentRenderTask.cancel();
+                currentRenderTask = page.render({ canvasContext: ctx, viewport });
+                currentRenderTask.promise.catch(() => {});
+            });
+        }
+
+        function loadAndRender() {
+            if (typeof pdfjsLib === "undefined") return;
+            if (pdfDoc) { renderPage(); return; }
+            pdfjsLib.getDocument(PDF_SRC).promise.then((pdf) => {
+                pdfDoc = pdf;
+                renderPage();
+            }).catch(() => {});
+        }
+
+        function onResize() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(renderPage, 150);
+        }
 
         function openModal() {
             lastFocused = document.activeElement;
-            iframe.src = PDF_SRC; // só carrega o PDF quando o usuário realmente abre
             modal.hidden = false;
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => modal.classList.add("is-open"));
             });
+            loadAndRender();
             document.addEventListener("keydown", onKeydown);
+            window.addEventListener("resize", onResize);
         }
 
         function closeModal() {
             modal.classList.remove("is-open");
             document.removeEventListener("keydown", onKeydown);
-            const done = () => {
-                modal.hidden = true;
-                iframe.src = ""; // libera memória do PDF carregado
-            };
+            window.removeEventListener("resize", onResize);
+            const done = () => { modal.hidden = true; };
             if (prefersReducedMotion) { done(); }
-            else { setTimeout(done, 320); }
+            else { setTimeout(done, 250); }
             if (lastFocused) lastFocused.focus();
         }
 
