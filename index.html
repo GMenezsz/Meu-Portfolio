@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon-192.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body id="inicio">
 
@@ -28,6 +29,7 @@
                 <a href="#stack">stack</a>
                 <a href="#websites">websites</a>
                 <a href="#projetos">projetos</a>
+                <a href="#experiencia">experiência</a>
                 <a href="#sobre-mim">sobre</a>
             </nav>
             <div class="header-socials">
@@ -133,17 +135,11 @@
                     </div>
                 </div>
 
-                <!-- MODAL: CERTIFICADO -->
-                <div class="cert-modal" id="cert-modal" hidden>
-                    <div class="cert-modal-backdrop" data-cert-close></div>
-                    <div class="cert-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cert-modal-title" id="cert-modal-dialog">
-                        <div class="cert-modal-header">
-                            <span id="cert-modal-title"><i class="fa-solid fa-certificate" aria-hidden="true"></i> Introdução à Cibersegurança — Cisco</span>
-                            <button type="button" class="cert-modal-close" data-cert-close aria-label="Fechar">&times;</button>
-                        </div>
-                        <div class="cert-modal-body">
-                            <iframe id="cert-modal-iframe" title="Certificado Introdução à Cibersegurança" src="" loading="lazy"></iframe>
-                        </div>
+                <!-- VISUALIZADOR: CERTIFICADO (tela cheia, sem chrome de PDF) -->
+                <div class="cert-viewer" id="cert-modal" role="dialog" aria-modal="true" aria-label="Certificado Introdução à Cibersegurança" hidden>
+                    <button type="button" class="cert-viewer-close" data-cert-close aria-label="Fechar certificado">&times;</button>
+                    <div class="cert-viewer-stage">
+                        <canvas id="cert-modal-canvas"></canvas>
                     </div>
                 </div>
 
@@ -283,6 +279,32 @@
                             <div class="github-redirect">
                                 <p>Acesse meu GitHub para mais:</p>
                                 <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" class="neon-link">GMenezsz</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- EXPERIENCIA PROFISSIONAL -->
+                    <section id="experiencia" class="content-section">
+                        <div class="window-bar">
+                            <span class="window-dots"><span></span><span></span><span></span></span>
+                            <span class="window-title">experiencia.log</span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="experience-list">
+                                <div class="experience-item">
+                                    <div class="experience-item-head">
+                                        <span class="experience-role">Preparador de Amostra</span>
+                                        <span class="experience-period experience-period--current">24/04/2026 — Atual</span>
+                                    </div>
+                                    <span class="experience-company">Convaco Construtora Vale do Aço LTDA</span>
+                                </div>
+                                <div class="experience-item">
+                                    <div class="experience-item-head">
+                                        <span class="experience-role">Operador de Empilhadeira</span>
+                                        <span class="experience-period">01/11/2022 — 13/09/2024</span>
+                                    </div>
+                                    <span class="experience-company">Sendas Distribuidora S/A</span>
+                                </div>
                             </div>
                         </div>
                     </section>
