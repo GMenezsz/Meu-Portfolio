@@ -412,6 +412,50 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
 
     // ==========================================================
+    // 2.3 MODAL: CERTIFICADO (visualização embutida, com animação)
+    // ==========================================================
+    (function setupCertModal() {
+        const openBtn = document.getElementById("cert-open-btn");
+        const modal = document.getElementById("cert-modal");
+        const iframe = document.getElementById("cert-modal-iframe");
+        if (!openBtn || !modal || !iframe) return;
+
+        const PDF_SRC = "assets/certificados/certificado-ciberseguranca-cisco.pdf";
+        let lastFocused = null;
+
+        function openModal() {
+            lastFocused = document.activeElement;
+            iframe.src = PDF_SRC; // só carrega o PDF quando o usuário realmente abre
+            modal.hidden = false;
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => modal.classList.add("is-open"));
+            });
+            document.addEventListener("keydown", onKeydown);
+        }
+
+        function closeModal() {
+            modal.classList.remove("is-open");
+            document.removeEventListener("keydown", onKeydown);
+            const done = () => {
+                modal.hidden = true;
+                iframe.src = ""; // libera memória do PDF carregado
+            };
+            if (prefersReducedMotion) { done(); }
+            else { setTimeout(done, 320); }
+            if (lastFocused) lastFocused.focus();
+        }
+
+        function onKeydown(e) {
+            if (e.key === "Escape") closeModal();
+        }
+
+        openBtn.addEventListener("click", openModal);
+        modal.querySelectorAll("[data-cert-close]").forEach((el) => {
+            el.addEventListener("click", closeModal);
+        });
+    })();
+
+    // ==========================================================
     // 3. NAVEGAÇÃO SUAVE CUSTOMIZADA
     // ==========================================================
     const internalLinks = document.querySelectorAll('a[href^="#"]');
