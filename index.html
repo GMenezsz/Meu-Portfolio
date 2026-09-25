@@ -91,9 +91,9 @@
                                 <span class="education-degree">Introdução à Cibersegurança</span>
                                 <span class="education-school">
                                     Cisco Networking Academy
-                                    <a class="cert-link" href="assets/certificados/certificado-ciberseguranca-cisco.pdf" target="_blank" rel="noopener noreferrer">
+                                    <button type="button" class="cert-link" id="cert-open-btn">
                                         <i class="fa-solid fa-eye" aria-hidden="true"></i> ver certificado
-                                    </a>
+                                    </button>
                                 </span>
                             </div>
                         </div>
@@ -129,6 +129,20 @@
                                 </div>
                                 <p>Foco em ETL, Pandas e dashboards de Business Intelligence.</p>
                             </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODAL: CERTIFICADO -->
+                <div class="cert-modal" id="cert-modal" hidden>
+                    <div class="cert-modal-backdrop" data-cert-close></div>
+                    <div class="cert-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cert-modal-title" id="cert-modal-dialog">
+                        <div class="cert-modal-header">
+                            <span id="cert-modal-title"><i class="fa-solid fa-certificate" aria-hidden="true"></i> Introdução à Cibersegurança — Cisco</span>
+                            <button type="button" class="cert-modal-close" data-cert-close aria-label="Fechar">&times;</button>
+                        </div>
+                        <div class="cert-modal-body">
+                            <iframe id="cert-modal-iframe" title="Certificado Introdução à Cibersegurança" src="" loading="lazy"></iframe>
                         </div>
                     </div>
                 </div>
