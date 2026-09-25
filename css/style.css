@@ -406,6 +406,22 @@ a {
     line-height: 1.35;
 }
 
+.cert-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-left: 0.5rem;
+    color: var(--accent);
+    font-size: 0.75rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.cert-link:hover,
+.cert-link:focus-visible {
+    text-decoration: underline;
+}
+
 /* ============================================
    BOTÃO: BAIXAR CURRÍCULO
    ============================================ */
