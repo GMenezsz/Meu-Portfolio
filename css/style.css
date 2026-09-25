@@ -560,6 +560,100 @@ a {
     line-height: 1.4;
 }
 
+/* ============================================
+   MODAL: CERTIFICADO (visualização embutida)
+   ============================================ */
+.cert-modal[hidden] { display: none; }
+
+.cert-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gutter);
+}
+
+.cert-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 9, 13, 0.78);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.28s ease;
+}
+
+.cert-modal-dialog {
+    position: relative;
+    width: min(760px, 100%);
+    height: min(85vh, 900px);
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cert-modal.is-open .cert-modal-backdrop { opacity: 1; }
+.cert-modal.is-open .cert-modal-dialog {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cert-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+    flex-shrink: 0;
+}
+
+.cert-modal-header i { color: var(--accent); }
+
+.cert-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.2rem;
+}
+
+.cert-modal-close:hover { color: var(--text); }
+
+.cert-modal-body {
+    flex: 1;
+    min-height: 0;
+    border-radius: calc(var(--radius) - 2px);
+    overflow: hidden;
+    background: #1a1d22;
+}
+
+.cert-modal-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cert-modal-backdrop,
+    .cert-modal-dialog {
+        transition: none;
+    }
+}
+
 .meta-item {
     display: inline-flex;
     align-items: flex-start;
