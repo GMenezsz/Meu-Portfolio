@@ -561,95 +561,70 @@ a {
 }
 
 /* ============================================
-   MODAL: CERTIFICADO (visualização embutida)
+   VISUALIZADOR: CERTIFICADO (tela cheia, puro)
    ============================================ */
-.cert-modal[hidden] { display: none; }
+.cert-viewer[hidden] { display: none; }
 
-.cert-modal {
+.cert-viewer {
     position: fixed;
     inset: 0;
-    z-index: 200;
+    z-index: 300;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--gutter);
-}
-
-.cert-modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(6, 9, 13, 0.78);
-    backdrop-filter: blur(2px);
+    background: #000;
     opacity: 0;
-    transition: opacity 0.28s ease;
+    transition: opacity 0.25s ease;
 }
 
-.cert-modal-dialog {
-    position: relative;
-    width: min(760px, 100%);
-    height: min(85vh, 900px);
-    display: flex;
-    flex-direction: column;
-    background: var(--bg-panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-}
+.cert-viewer.is-open { opacity: 1; }
 
-.cert-modal.is-open .cert-modal-backdrop { opacity: 1; }
-.cert-modal.is-open .cert-modal-dialog {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.cert-modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    font-family: var(--mono);
-    font-weight: 600;
-    color: var(--text);
-    font-size: 0.95rem;
-    margin-bottom: 0.8rem;
-    flex-shrink: 0;
-}
-
-.cert-modal-header i { color: var(--accent); }
-
-.cert-modal-close {
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    font-size: 1.3rem;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0.2rem;
-}
-
-.cert-modal-close:hover { color: var(--text); }
-
-.cert-modal-body {
-    flex: 1;
-    min-height: 0;
-    border-radius: calc(var(--radius) - 2px);
-    overflow: hidden;
-    background: #1a1d22;
-}
-
-.cert-modal-body iframe {
+.cert-viewer-stage {
     width: 100%;
     height: 100%;
-    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cert-viewer-stage canvas {
+    display: block;
+    max-width: 100vw;
+    max-height: 100vh;
+    width: auto;
+    height: auto;
+}
+
+.cert-viewer-close {
+    position: fixed;
+    top: max(0.9rem, env(safe-area-inset-top, 0px));
+    right: max(0.9rem, env(safe-area-inset-right, 0px));
+    z-index: 310;
+    width: 2.4rem;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(10, 13, 18, 0.55);
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.cert-viewer-close:hover,
+.cert-viewer-close:focus-visible {
+    background: rgba(10, 13, 18, 0.85);
+    transform: scale(1.05);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .cert-modal-backdrop,
-    .cert-modal-dialog {
+    .cert-viewer {
         transition: none;
     }
 }
@@ -1042,6 +1017,61 @@ a {
 .neon-link:hover {
     color: var(--accent-strong);
     text-decoration: underline;
+}
+
+/* ============================================
+   EXPERIENCIA PROFISSIONAL
+   ============================================ */
+.experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.experience-item {
+    background: var(--bg-chip);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 0.8rem 0.9rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.experience-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.experience-item-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem 0.8rem;
+}
+
+.experience-role {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text);
+}
+
+.experience-period {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    white-space: nowrap;
+}
+
+.experience-period--current {
+    color: var(--accent);
+}
+
+.experience-company {
+    display: block;
+    margin-top: 0.3rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
 }
 
 /* ============================================
