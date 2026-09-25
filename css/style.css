@@ -623,6 +623,7 @@ a {
 .site-card--calc { --card-color: var(--blue); }
 .site-card--finance { --card-color: var(--status); }
 .site-card--etl { --card-color: var(--violet); }
+.site-card--vendas { --card-color: var(--amber); }
 
 .site-card-head {
     display: flex;
