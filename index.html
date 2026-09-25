@@ -75,7 +75,59 @@
                         <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Coronel Fabriciano, MG — Brasil</span>
                         <a class="meta-item meta-link" href="mailto:gabriel26guedes@gmail.com"><i class="fa-solid fa-envelope"></i> gabriel26guedes@gmail.com</a>
                     </div>
+
+                    <div class="hero-education hero-reveal">
+                        <span class="hero-education-title">formação</span>
+                        <div class="education-item">
+                            <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                            <div class="education-text">
+                                <span class="education-degree">Tecnólogo em Gestão da Tecnologia da Informação</span>
+                                <span class="education-school">Unicive (Centro Universitário Cidade Verde) — Cursando · Previsão: 08/2028</span>
+                            </div>
+                        </div>
+                        <div class="education-item">
+                            <i class="fa-solid fa-certificate" aria-hidden="true"></i>
+                            <div class="education-text">
+                                <span class="education-degree">Introdução à Cibersegurança</span>
+                                <span class="education-school">Cisco Networking Academy</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-download-cv hero-reveal" id="cv-download-btn">
+                        <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Baixar currículo
+                    </button>
                 </aside>
+
+                <!-- MODAL: ESCOLHA DE CURRÍCULO -->
+                <div class="cv-modal" id="cv-modal" hidden>
+                    <div class="cv-modal-backdrop" data-cv-close></div>
+                    <div class="cv-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
+                        <div class="cv-modal-header">
+                            <span id="cv-modal-title">Qual currículo você precisa?</span>
+                            <button type="button" class="cv-modal-close" data-cv-close aria-label="Fechar">&times;</button>
+                        </div>
+                        <p class="cv-modal-sub">Escolha a versão mais alinhada com a vaga que você está aplicando:</p>
+                        <div class="cv-modal-options">
+                            <a class="cv-option" href="assets/curriculos/Curriculo-Backend-Gabriel-Menezes.pdf" download>
+                                <div class="cv-option-head">
+                                    <i class="fa-solid fa-server" aria-hidden="true"></i>
+                                    <span>Currículo — Backend</span>
+                                    <i class="fa-solid fa-download cv-option-icon" aria-hidden="true"></i>
+                                </div>
+                                <p>Foco em APIs REST, FastAPI e arquitetura backend.</p>
+                            </a>
+                            <a class="cv-option" href="assets/curriculos/Curriculo-Dados-Gabriel-Menezes.pdf" download>
+                                <div class="cv-option-head">
+                                    <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                                    <span>Currículo — Dados</span>
+                                    <i class="fa-solid fa-download cv-option-icon" aria-hidden="true"></i>
+                                </div>
+                                <p>Foco em ETL, Pandas e dashboards de Business Intelligence.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- CONTEUDO -->
                 <div class="profile-content">
