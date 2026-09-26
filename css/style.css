@@ -254,6 +254,12 @@ a {
     padding: clamp(1rem, 2.2vw, 1.6rem);
 }
 
+/* garante 1 coluna sempre nesta variante, mesmo nas telas largas onde
+   .profile-content normalmente vira 2 colunas (ver responsividade) */
+.profile-content.profile-content--full {
+    grid-template-columns: minmax(0, 1fr);
+}
+
 /* ============================================
    SIDEBAR: PERFIL
    ============================================ */
@@ -1185,6 +1191,25 @@ a {
     font-weight: 600;
     color: var(--card-color, var(--accent));
     margin: 0 0 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.showcase-pulse-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(94, 234, 212, 0.6);
+    animation: pulse-dot-accent 2.4s ease-out infinite;
+}
+
+@keyframes pulse-dot-accent {
+    0% { box-shadow: 0 0 0 0 rgba(94, 234, 212, 0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(94, 234, 212, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(94, 234, 212, 0); }
 }
 
 .showcase-card p {
