@@ -413,6 +413,62 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.querySelectorAll("[data-cv-close]").forEach((el) => {
             el.addEventListener("click", closeModal);
         });
+
+        // ------------------------------------------------------------
+        // Download seguro do PDF: em vez de deixar o navegador navegar
+        // direto para o arquivo (o que, se ele não existir no servidor,
+        // joga o usuário para a página de erro 404 do navegador), o
+        // clique busca o arquivo primeiro. Se existir, baixa normalmente;
+        // se não existir (ou falhar), mostra um aviso ali mesmo, sem
+        // sair do portfólio.
+        // ------------------------------------------------------------
+        modal.querySelectorAll(".cv-option").forEach((link) => {
+            link.addEventListener("click", async (e) => {
+                e.preventDefault();
+                if (link.classList.contains("is-loading")) return;
+
+                const href = link.getAttribute("href");
+                const fileName = href.split("/").pop();
+
+                link.classList.add("is-loading");
+                clearCvError(link);
+
+                try {
+                    const response = await fetch(href, { cache: "no-store" });
+                    if (!response.ok) throw new Error("Arquivo não encontrado");
+
+                    const blob = await response.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    const tempLink = document.createElement("a");
+                    tempLink.href = blobUrl;
+                    tempLink.download = fileName;
+                    document.body.appendChild(tempLink);
+                    tempLink.click();
+                    tempLink.remove();
+                    URL.revokeObjectURL(blobUrl);
+                } catch (err) {
+                    showCvError(link, "Currículo indisponível no momento. Tente novamente mais tarde.");
+                } finally {
+                    link.classList.remove("is-loading");
+                }
+            });
+        });
+
+        function showCvError(link, message) {
+            let msg = link.querySelector(".cv-option-error");
+            if (!msg) {
+                msg = document.createElement("span");
+                msg.className = "cv-option-error";
+                link.appendChild(msg);
+            }
+            msg.textContent = message;
+            requestAnimationFrame(() => msg.classList.add("show"));
+        }
+
+        function clearCvError(link) {
+            const msg = link.querySelector(".cv-option-error");
+            if (msg) msg.remove();
+        }
     })();
 
     // ==========================================================
@@ -434,13 +490,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Renderiza a página do certificado num <canvas> puro (sem toolbar
         // nativa de PDF do navegador), contido numa caixa e não na tela toda.
+        // telas grandes (desktop) mostram o certificado maior;
+        // telas menores (celular/tablet) mantêm o tamanho original
+        const LARGE_SCREEN_BREAKPOINT = 1024;
+
         function renderPage() {
             if (!pdfDoc) return;
             pdfDoc.getPage(1).then((page) => {
                 const dpr = window.devicePixelRatio || 1;
                 const baseViewport = page.getViewport({ scale: 1 });
-                const maxW = Math.min(640, window.innerWidth * 0.9);
-                const maxH = Math.min(window.innerHeight * 0.8, 820);
+                const isLargeScreen = window.innerWidth >= LARGE_SCREEN_BREAKPOINT;
+                const maxW = isLargeScreen
+                    ? Math.min(1000, window.innerWidth * 0.8)
+                    : Math.min(640, window.innerWidth * 0.9);
+                const maxH = isLargeScreen
+                    ? Math.min(window.innerHeight * 0.85, 1200)
+                    : Math.min(window.innerHeight * 0.8, 820);
                 const fitScale = Math.min(maxW / baseViewport.width, maxH / baseViewport.height);
                 const renderViewport = page.getViewport({ scale: fitScale * dpr });
 
