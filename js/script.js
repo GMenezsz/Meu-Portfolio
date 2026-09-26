@@ -433,25 +433,24 @@ document.addEventListener("DOMContentLoaded", () => {
         let resizeTimer = null;
 
         // Renderiza a página do certificado num <canvas> puro (sem toolbar
-        // nativa de PDF do navegador), ocupando o máximo da tela disponível.
+        // nativa de PDF do navegador), contido numa caixa e não na tela toda.
         function renderPage() {
             if (!pdfDoc) return;
             pdfDoc.getPage(1).then((page) => {
                 const dpr = window.devicePixelRatio || 1;
                 const baseViewport = page.getViewport({ scale: 1 });
-                const scale = Math.min(
-                    window.innerWidth / baseViewport.width,
-                    window.innerHeight / baseViewport.height
-                ) * dpr;
-                const viewport = page.getViewport({ scale });
+                const maxW = Math.min(640, window.innerWidth * 0.9);
+                const maxH = Math.min(window.innerHeight * 0.8, 820);
+                const fitScale = Math.min(maxW / baseViewport.width, maxH / baseViewport.height);
+                const renderViewport = page.getViewport({ scale: fitScale * dpr });
 
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
-                canvas.style.width = (viewport.width / dpr) + "px";
-                canvas.style.height = (viewport.height / dpr) + "px";
+                canvas.width = renderViewport.width;
+                canvas.height = renderViewport.height;
+                canvas.style.width = (fitScale * baseViewport.width) + "px";
+                canvas.style.height = (fitScale * baseViewport.height) + "px";
 
                 if (currentRenderTask) currentRenderTask.cancel();
-                currentRenderTask = page.render({ canvasContext: ctx, viewport });
+                currentRenderTask = page.render({ canvasContext: ctx, viewport: renderViewport });
                 currentRenderTask.promise.catch(() => {});
             });
         }
@@ -498,6 +497,10 @@ document.addEventListener("DOMContentLoaded", () => {
         openBtn.addEventListener("click", openModal);
         modal.querySelectorAll("[data-cert-close]").forEach((el) => {
             el.addEventListener("click", closeModal);
+        });
+        // clique na área transparente (fora do certificado) também fecha
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
         });
     })();
 
