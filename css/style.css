@@ -1075,6 +1075,87 @@ a {
 }
 
 /* ============================================
+   SHOWCASE (página "ver mais": cada website isolado,
+   pronto para receber imagens/explicações tipo README)
+   ============================================ */
+.showcase-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.showcase-item {
+    display: block;
+    background: var(--bg-chip);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--card-color, var(--accent));
+    border-radius: var(--radius);
+    padding: 1.3rem 1.4rem;
+    min-width: 0;
+    transition: border-color 0.2s ease;
+}
+
+.showcase-item--calc { --card-color: var(--blue); }
+.showcase-item--finance { --card-color: var(--status); }
+.showcase-item--etl { --card-color: var(--violet); }
+.showcase-item--vendas { --card-color: var(--amber); }
+
+.showcase-item-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+}
+
+.showcase-name {
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1.15rem;
+    margin: 0;
+}
+
+.showcase-visit {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--card-color, var(--accent));
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.showcase-visit:hover,
+.showcase-visit:focus-visible {
+    border-color: var(--card-color, var(--accent));
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.showcase-url {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--card-color, var(--accent));
+    margin-top: 0.5rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.showcase-desc {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-top: 0.7rem;
+    line-height: 1.6;
+    max-width: 80ch;
+}
+
+/* ============================================
    PROJETOS
    ============================================ */
 .project-list {
