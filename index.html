@@ -106,43 +106,6 @@
                     </button>
                 </aside>
 
-                <!-- MODAL: ESCOLHA DE CURRÍCULO -->
-                <div class="cv-modal" id="cv-modal" hidden>
-                    <div class="cv-modal-backdrop" data-cv-close></div>
-                    <div class="cv-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
-                        <div class="cv-modal-header">
-                            <span id="cv-modal-title">Qual currículo você precisa?</span>
-                            <button type="button" class="cv-modal-close" data-cv-close aria-label="Fechar">&times;</button>
-                        </div>
-                        <div class="cv-modal-options">
-                            <a class="cv-option" href="assets/curriculos/Curriculo-Backend-Gabriel-Menezes.pdf" download>
-                                <div class="cv-option-head">
-                                    <i class="fa-solid fa-server" aria-hidden="true"></i>
-                                    <span>Currículo — Backend</span>
-                                    <i class="fa-solid fa-download cv-option-icon" aria-hidden="true"></i>
-                                </div>
-                                <p>Foco em APIs REST, FastAPI e arquitetura backend.</p>
-                            </a>
-                            <a class="cv-option" href="assets/curriculos/Curriculo-Dados-Gabriel-Menezes.pdf" download>
-                                <div class="cv-option-head">
-                                    <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
-                                    <span>Currículo — Dados</span>
-                                    <i class="fa-solid fa-download cv-option-icon" aria-hidden="true"></i>
-                                </div>
-                                <p>Foco em ETL, Pandas e dashboards de Business Intelligence.</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VISUALIZADOR: CERTIFICADO (tela cheia, sem chrome de PDF) -->
-                <div class="cert-viewer" id="cert-modal" role="dialog" aria-modal="true" aria-label="Certificado Introdução à Cibersegurança" hidden>
-                    <button type="button" class="cert-viewer-close" data-cert-close aria-label="Fechar certificado">&times;</button>
-                    <div class="cert-viewer-stage">
-                        <canvas id="cert-modal-canvas"></canvas>
-                    </div>
-                </div>
-
                 <!-- CONTEUDO -->
                 <div class="profile-content">
 
@@ -293,17 +256,19 @@
                             <div class="experience-list">
                                 <div class="experience-item">
                                     <div class="experience-item-head">
-                                        <span class="experience-role">Preparador de Amostra</span>
+                                        <span class="experience-company">Convaco Construtora Vale do Aço LTDA</span>
                                         <span class="experience-period experience-period--current">24/04/2026 — Atual</span>
                                     </div>
-                                    <span class="experience-company">Convaco Construtora Vale do Aço LTDA</span>
+                                    <span class="experience-role">Preparador de Amostra</span>
+                                    <p class="experience-desc">Execução e padronização de processos de preparação de amostras químicas para análise, com rigoroso controle de qualidade, garantindo precisão nos resultados e confiabilidade dos registros.</p>
                                 </div>
                                 <div class="experience-item">
                                     <div class="experience-item-head">
-                                        <span class="experience-role">Operador de Empilhadeira</span>
+                                        <span class="experience-company">Sendas Distribuidora S/A</span>
                                         <span class="experience-period">01/11/2022 — 13/09/2024</span>
                                     </div>
-                                    <span class="experience-company">Sendas Distribuidora S/A</span>
+                                    <span class="experience-role">Operador de Empilhadeira</span>
+                                    <p class="experience-desc">Operação de empilhadeiras elétricas e a combustão em carga e descarga de caminhões, além da movimentação e organização de estoques, assegurando agilidade no fluxo de mercadorias e segurança nas operações do armazém.</p>
                                 </div>
                             </div>
                         </div>
@@ -347,6 +312,43 @@
             </div>
         </div>
     </footer>
+
+    <!-- MODAL: ESCOLHA DE CURRÍCULO (fora do master-card p/ não ser cortado por overflow) -->
+    <div class="cv-modal" id="cv-modal" hidden>
+        <div class="cv-modal-backdrop" data-cv-close></div>
+        <div class="cv-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
+            <div class="cv-modal-header">
+                <span id="cv-modal-title">Qual currículo você precisa?</span>
+                <button type="button" class="cv-modal-close" data-cv-close aria-label="Fechar">&times;</button>
+            </div>
+            <div class="cv-modal-options">
+                <a class="cv-option" href="assets/curriculos/Curriculo-Backend-Gabriel-Menezes.pdf" download>
+                    <div class="cv-option-head">
+                        <i class="fa-solid fa-server" aria-hidden="true"></i>
+                        <span>Currículo — Backend</span>
+                        <i class="fa-solid fa-download cv-option-icon" aria-hidden="true"></i>
+                    </div>
+                    <p>Foco em APIs REST, FastAPI e arquitetura backend.</p>
+                </a>
+                <a class="cv-option" href="assets/curriculos/Curriculo-Dados-Gabriel-Menezes.pdf" download>
+                    <div class="cv-option-head">
+                        <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                        <span>Currículo — Dados</span>
+                        <i class="fa-solid fa-download cv-option-icon" aria-hidden="true"></i>
+                    </div>
+                    <p>Foco em ETL, Pandas e dashboards de Business Intelligence.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISUALIZADOR: CERTIFICADO (flutua por cima, sem escurecer o portfólio) -->
+    <div class="cert-viewer" id="cert-modal" role="dialog" aria-modal="true" aria-label="Certificado Introdução à Cibersegurança" hidden>
+        <div class="cert-viewer-stage">
+            <canvas id="cert-modal-canvas"></canvas>
+            <button type="button" class="cert-viewer-close" data-cert-close aria-label="Fechar certificado">&times;</button>
+        </div>
+    </div>
 
     <script src="js/script.js"></script>
 </body>
