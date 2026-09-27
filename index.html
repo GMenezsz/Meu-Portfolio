@@ -2,41 +2,50 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <script>document.documentElement.classList.add("js");</script>
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem("gm-theme");
+                var theme = (saved === "light" || saved === "dark")
+                    ? saved
+                    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                document.documentElement.setAttribute("data-theme", theme);
+            } catch (e) {}
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#0a0d12">
-    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#f6f7f9">
     <title>Gabriel Menezes | Desenvolvedor Backend</title>
     <meta name="description" content="Portfólio de Gabriel Menezes, desenvolvedor backend focado em Python, FastAPI e modelagem de dados.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon-192.png" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body id="inicio">
-
-    <!-- FUNDO: CHUVA DE CODIGO (hacker), roda o tempo todo desde a abertura -->
-    <canvas id="bg-matrix-canvas" class="bg-matrix-canvas" aria-hidden="true"></canvas>
 
     <!-- HEADER -->
     <header class="header">
         <div class="header-container">
             <a href="#inicio" class="logo">GMenezs</a>
             <nav class="nav-links" aria-label="Navegação principal">
+                <a href="#sobre">sobre</a>
+                <a href="#experiencia">experiência</a>
                 <a href="#stack">stack</a>
                 <a href="#websites">websites</a>
                 <a href="#projetos">projetos</a>
-                <a href="#experiencia">experiência</a>
-                <a href="#sobre-mim">sobre</a>
             </nav>
-            <div class="header-socials">
-                <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <div class="header-actions">
+                <button type="button" class="icon-btn theme-toggle" id="theme-toggle-btn" aria-label="Alternar tema claro/escuro">
+                    <i class="fa-solid fa-sun" aria-hidden="true"></i>
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                </button>
+                <a class="icon-btn" href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/gabriel-menezes-9367793a1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <a class="icon-btn" href="https://www.linkedin.com/in/gabriel-menezes-9367793a1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
             </div>
@@ -45,255 +54,249 @@
 
     <main class="page">
 
-        <div class="master-card">
-            <div class="window-bar master-card-bar">
-                <span class="window-dots"><span></span><span></span><span></span></span>
-                <span class="window-title">gabriel@menezes:~$</span>
+        <!-- PERFIL -->
+        <section class="profile-card">
+            <div class="profile-main">
+                <div class="hero-avatar-wrap">
+                    <img src="assets/avatar.jpg" alt="Foto de Gabriel Menezes" class="profile-avatar" width="176" height="176" decoding="async" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='176' height='176'%3E%3Crect width='176' height='176' fill='%23e4e7ec'/%3E%3Ctext x='50%25' y='54%25' fill='%234f46e5' font-family='sans-serif' font-size='60' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3EGM%3C/text%3E%3C/svg%3E">
+                </div>
+                <p class="hero-status">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    Disponível para novos projetos
+                </p>
+                <h1 class="hero-name">Gabriel Menezes</h1>
+                <p class="hero-role">Desenvolvedor Backend</p>
+                <p class="hero-bio">
+                    Construo APIs REST com Python e FastAPI, modelo dados e cuido de performance
+                    do início ao fim — de scripts de ETL a sistemas com autenticação e persistência.
+                </p>
+                <div class="hero-meta">
+                    <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Coronel Fabriciano, MG — Brasil</span>
+                    <a class="meta-item" href="mailto:gabriel26guedes@gmail.com"><i class="fa-solid fa-envelope"></i> gabriel26guedes@gmail.com</a>
+                </div>
             </div>
-
-            <div class="master-card-body">
-
-                <!-- SIDEBAR: PERFIL -->
-                <aside class="profile-sidebar">
-                    <div class="hero-avatar hero-reveal">
-                        <img src="assets/avatar.jpg" alt="Foto de Gabriel Menezes" class="profile-avatar" width="128" height="128" decoding="async" onerror="this.onerror=null;this.src=&quot;data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Crect width='160' height='160' fill='%2310141b'/%3E%3Ctext x='50%25' y='54%25' fill='%235eead4' font-family='monospace' font-size='56' font-weight='700' text-anchor='middle' dominant-baseline='middle'%3EGM%3C/text%3E%3C/svg%3E&quot;">
-                    </div>
-
-                    <p class="hero-status" id="hero-status">
-                        <span class="status-dot" aria-hidden="true"></span>
-                        <span class="sr-only">Disponível para novos projetos</span>
-                        <span id="decrypt-status" aria-hidden="true">Disponível para novos projetos</span>
-                    </p>
-
-                    <h1 class="hero-name hero-reveal"><span id="typed-name"></span><span class="hero-cursor" id="name-cursor" aria-hidden="true"></span></h1>
-                    <p class="hero-role hero-reveal"><span id="typed-role"></span><span class="hero-cursor" id="role-cursor" style="display:none;" aria-hidden="true"></span></p>
-
-                    <p class="hero-bio hero-reveal">
-                        Estudante de Gestão da Tecnologia da Informação, construindo APIs e sistemas com
-                        Python. Interesse em modelagem de dados, segurança e arquitetura backend.
-                    </p>
-
-                    <div class="hero-meta hero-reveal">
-                        <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Coronel Fabriciano, MG — Brasil</span>
-                        <a class="meta-item meta-link" href="mailto:gabriel26guedes@gmail.com"><i class="fa-solid fa-envelope"></i> gabriel26guedes@gmail.com</a>
-                    </div>
-
-                    <div class="hero-education hero-reveal">
-                        <span class="hero-education-title">formação</span>
-                        <div class="education-item">
+            <div class="profile-side">
+                <div>
+                    <span class="profile-formacao-title">Formação</span>
+                    <div class="profile-formacao">
+                        <div class="education-card">
                             <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
-                            <div class="education-text">
+                            <div>
                                 <span class="education-degree">Tecnólogo em Gestão da Tecnologia da Informação</span>
-                                <span class="education-school">Unicive (Centro Universitário Cidade Verde) — Cursando · Previsão: 08/2028</span>
+                                <span class="education-school">Unicive — Cursando · Previsão: 08/2028</span>
                             </div>
                         </div>
-                        <div class="education-item">
+                        <div class="education-card">
                             <i class="fa-solid fa-certificate" aria-hidden="true"></i>
-                            <div class="education-text">
+                            <div>
                                 <span class="education-degree">Introdução à Cibersegurança</span>
                                 <span class="education-school">Cisco Networking Academy</span>
-                                <button type="button" class="cert-link" id="cert-open-btn">
+                                <button type="button" class="cert-link" data-cert-open="assets/certificados/certificado-ciberseguranca-cisco.jpg" data-cert-alt="Certificado Cisco — Introdução à Cibersegurança">
                                     <i class="fa-solid fa-eye" aria-hidden="true"></i> ver certificado
                                 </button>
                             </div>
                         </div>
                     </div>
-
-                    <button type="button" class="btn-download-cv hero-reveal" id="cv-download-btn">
+                </div>
+                <div class="profile-actions">
+                    <button type="button" class="btn btn-primary" data-cv-open>
                         <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Baixar currículo
                     </button>
-                </aside>
-
-                <!-- CONTEUDO -->
-                <div class="profile-content">
-
-                    <!-- TECNOLOGIAS -->
-                    <section id="stack" class="content-section">
-                        <div class="window-bar">
-                            <span class="window-dots"><span></span><span></span><span></span></span>
-                            <span class="window-title">tech-stack.json</span>
-                        </div>
-                        <div class="panel-body">
-                            <div class="stack-row stack-row--lang">
-                                <span class="stack-key">linguagem</span>
-                                <span class="stack-value">
-                                    <span class="chip">Python</span>
-                                </span>
-                            </div>
-                            <div class="stack-row stack-row--frameworks">
-                                <span class="stack-key">frameworks_apis</span>
-                                <span class="stack-value">
-                                    <span class="chip">FastAPI</span>
-                                    <span class="chip">Uvicorn</span>
-                                </span>
-                            </div>
-                            <div class="stack-row stack-row--db">
-                                <span class="stack-key">banco_de_dados</span>
-                                <span class="stack-value">
-                                    <span class="chip">SQLite</span>
-                                    <span class="chip">SQL</span>
-                                </span>
-                            </div>
-                            <div class="stack-row stack-row--security">
-                                <span class="stack-key">seguranca</span>
-                                <span class="stack-value">
-                                    <span class="chip">Bcrypt (hash de senhas)</span>
-                                </span>
-                            </div>
-                            <div class="stack-row stack-row--tools">
-                                <span class="stack-key">ferramentas</span>
-                                <span class="stack-value">
-                                    <span class="chip">Pandas</span>
-                                    <span class="chip">Excel</span>
-                                </span>
-                            </div>
-                            <div class="stack-row stack-row--vcs">
-                                <span class="stack-key">versionamento</span>
-                                <span class="stack-value">
-                                    <span class="chip">Git</span>
-                                    <span class="chip">GitHub</span>
-                                </span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- WEBSITES -->
-                    <section id="websites" class="content-section">
-                        <div class="window-bar">
-                            <span class="window-dots"><span></span><span></span><span></span></span>
-                            <span class="window-title">websites/</span>
-                            <a class="ver-mais-link" href="projetos-completos.html">ver mais</a>
-                        </div>
-                        <div class="panel-body">
-                            <div class="site-grid">
-                                <a class="site-card site-card--calc" href="https://calculadora-inteligente-sigma.vercel.app/" target="_blank" rel="noopener noreferrer">
-                                    <div class="site-card-head">
-                                        <span class="site-name">Nexus Calc</span>
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </div>
-                                    <span class="site-url">calculadora-inteligente-sigma.vercel.app</span>
-                                    <p class="site-desc">Calculadora inteligente construída com FastAPI, feita para resolver operações lógicas e matemáticas de forma rápida e automatizada.</p>
-                                </a>
-
-                                <a class="site-card site-card--finance" href="https://nexus-finance-lemon.vercel.app/#/login" target="_blank" rel="noopener noreferrer">
-                                    <div class="site-card-head">
-                                        <span class="site-name">Nexus Finance</span>
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </div>
-                                    <span class="site-url">nexus-finance-lemon.vercel.app</span>
-                                    <p class="site-desc">Plataforma de controle financeiro pessoal: registro de transações, categorias e metas de reserva com acompanhamento de progresso.</p>
-                                </a>
-
-                                <a class="site-card site-card--etl" href="https://etl-com-app-metvcdp57jcwlqcpaye2jk.streamlit.app/" target="_blank" rel="noopener noreferrer">
-                                    <div class="site-card-head">
-                                        <span class="site-name">ETL com Streamlit</span>
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </div>
-                                    <span class="site-url">etl-com-app-metvcdp57jcwlqcpaye2jk.streamlit.app</span>
-                                    <p class="site-desc">Projeto desenvolvido para automação de análise de dados corporativos e visualização em interface web interativa, aplicando boas práticas de manipulação de dados, agrupamentos, filtros e engenharia de dados.</p>
-                                </a>
-
-                                <a class="site-card site-card--vendas" href="https://painel-vendas-etl.streamlit.app/" target="_blank" rel="noopener noreferrer">
-                                    <div class="site-card-head">
-                                        <span class="site-name">Painel de Vendas</span>
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </div>
-                                    <span class="site-url">painel-vendas-etl.streamlit.app</span>
-                                    <p class="site-desc">Um painel de Business Intelligence (BI) interativo e moderno desenvolvido em Python, utilizando Pandas para o pipeline de dados (ETL) e Streamlit junto com Plotly para a interface web de visualização.</p>
-                                </a>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- PROJETOS -->
-                    <section id="projetos" class="content-section">
-                        <div class="window-bar">
-                            <span class="window-dots"><span></span><span></span><span></span></span>
-                            <span class="window-title">projetos/</span>
-                        </div>
-                        <div class="panel-body">
-                            <div class="project-list">
-                                <div class="project-item">
-                                    <h3><a href="https://github.com/GMenezsz/Calculadora-Inteligente-API" target="_blank" rel="noopener noreferrer">Nexus Calc (FastAPI)</a></h3>
-                                    <p>Projetada para processar operações lógicas e de cálculo de forma rápida, eficiente e automatizada.</p>
-                                </div>
-                                <div class="project-item">
-                                    <h3><a href="https://github.com/GMenezsz/Nexus-API" target="_blank" rel="noopener noreferrer">Nexus Finance (FastAPI)</a></h3>
-                                    <p>Permite controlar receitas e despesas, planejar metas de economia e acompanhar relatórios financeiros, tudo em uma interface responsiva com suporte a tema claro/escuro e instalação como aplicativo.</p>
-                                </div>
-                                <div class="project-item">
-                                    <h3><a href="https://github.com/GMenezsz/Cadastro-Corporativo-v2" target="_blank" rel="noopener noreferrer">Cadastro Corporativo (FastAPI)</a></h3>
-                                    <p>Sistema backend desenvolvido em FastAPI para gerenciamento de funcionários e controle de acesso corporativo, com foco em segurança de dados sensíveis (criptografia de CPFs e hashing seguro de senhas).</p>
-                                </div>
-                                <div class="project-item">
-                                    <h3><a href="https://github.com/GMenezsz/ETL-com-Streamlit" target="_blank" rel="noopener noreferrer">ETL com Streamlit</a></h3>
-                                    <p>Projeto desenvolvido para automação de análise de dados corporativos e visualização em interface web interativa, aplicando boas práticas de manipulação de dados, agrupamentos, filtros e engenharia de dados.</p>
-                                </div>
-                                <div class="project-item">
-                                    <h3><a href="https://github.com/GMenezsz/Automacao-de-Planilha" target="_blank" rel="noopener noreferrer">Automação e Análise de Dados</a></h3>
-                                    <p>Este projeto consiste num script em Python desenvolvido com a biblioteca Pandas para automatizar o processo de limpeza, transformação, cruzamento e resumo de dados de vendas, gerando relatórios gerenciais prontos para exportação em formato Excel.</p>
-                                </div>
-                                <div class="project-item">
-                                    <h3><a href="https://github.com/GMenezsz/Painel-de-Vendas" target="_blank" rel="noopener noreferrer">Painel de Vendas</a></h3>
-                                    <p>Um painel de Business Intelligence (BI) interativo e moderno desenvolvido em Python, utilizando Pandas para o pipeline de dados (ETL) e Streamlit junto com Plotly para a interface web de visualização.</p>
-                                </div>
-                            </div>
-                            <div class="github-redirect">
-                                <p>Acesse meu GitHub para mais:</p>
-                                <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" class="neon-link">GMenezsz</a>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- EXPERIENCIA PROFISSIONAL -->
-                    <section id="experiencia" class="content-section">
-                        <div class="window-bar">
-                            <span class="window-dots"><span></span><span></span><span></span></span>
-                            <span class="window-title">experiencia.log</span>
-                        </div>
-                        <div class="panel-body">
-                            <div class="experience-list">
-                                <div class="experience-item">
-                                    <div class="experience-item-head">
-                                        <span class="experience-company">Convaco Construtora Vale do Aço LTDA</span>
-                                        <span class="experience-period experience-period--current">24/04/2026 — Atual</span>
-                                    </div>
-                                    <span class="experience-role">Preparador de Amostra</span>
-                                    <p class="experience-desc">Execução e padronização de processos de preparação de amostras químicas para análise, com rigoroso controle de qualidade, garantindo precisão nos resultados e confiabilidade dos registros.</p>
-                                </div>
-                                <div class="experience-item">
-                                    <div class="experience-item-head">
-                                        <span class="experience-company">Sendas Distribuidora S/A</span>
-                                        <span class="experience-period">01/11/2022 — 13/09/2024</span>
-                                    </div>
-                                    <span class="experience-role">Operador de Empilhadeira</span>
-                                    <p class="experience-desc">Operação de empilhadeiras elétricas e a combustão em carga e descarga de caminhões, além da movimentação e organização de estoques, assegurando agilidade no fluxo de mercadorias e segurança nas operações do armazém.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- SOBRE MIM -->
-                    <section id="sobre-mim" class="content-section">
-                        <div class="window-bar">
-                            <span class="window-dots"><span></span><span></span><span></span></span>
-                            <span class="window-title">sobre.md</span>
-                        </div>
-                        <div class="panel-body">
-                            <div class="about-text">
-                                <p>Focado no desenvolvimento Backend, modelagem de dados e construção de sistemas robustos, seguros e ETL.</p>
-                                <ul class="about-list">
-                                    <li>Atuo no desenvolvimento backend e engenharia de dados, criando desde estruturas robustas em SQLite e APIs com FastAPI até painéis analíticos interativos com Streamlit e Pandas.</li>
-                                    <li>Estudante de Gestão da TI com forte foco em automação e qualidade de processos.</li>
-                                </ul>
-                                <p class="about-footer-text">Minha missão é entregar robustez de ponta a ponta: do tratamento inteligente dos dados até a entrega de uma interface web funcional e de alto desempenho.</p>
-                            </div>
-                        </div>
-                    </section>
-
+                    <a class="btn btn-secondary" href="#websites">
+                        <i class="fa-solid fa-arrow-down" aria-hidden="true"></i> Ver websites
+                    </a>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- SOBRE MIM -->
+        <section id="sobre" class="reveal">
+            <div class="section-head">
+                <div>
+                    <span class="section-eyebrow">quem eu sou</span>
+                    <h2 class="section-title">Sobre mim</h2>
+                </div>
+            </div>
+            <div class="about">
+                <div class="about-text">
+                    <p>Desenvolvedor backend focado em Python. Trabalho com APIs REST em FastAPI e modelagem de dados em SQLite/SQL, sempre com atenção a estrutura, validação e segurança desde o design da API.</p>
+                    <p>Também atuo com engenharia de dados: pipelines de ETL em Pandas e painéis analíticos interativos com Streamlit, transformando dados brutos em relatórios e métricas de negócio.</p>
+                </div>
+                <ul class="about-list">
+                    <li><strong>Antes da programação:</strong> experiência em controle de qualidade e logística — trouxe pra código a mesma disciplina de processo, precisão e conferência de resultados.</li>
+                    <li><strong>Foco atual:</strong> arquitetura backend, segurança de dados sensíveis e automação de processos.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- EXPERIÊNCIA -->
+        <section id="experiencia" class="reveal">
+            <div class="section-head">
+                <div>
+                    <span class="section-eyebrow">trajetória</span>
+                    <h2 class="section-title">Experiência</h2>
+                </div>
+            </div>
+            <div class="experience-list">
+                <div class="experience-item">
+                    <div class="experience-item-head">
+                        <span class="experience-company">Convaco Construtora Vale do Aço LTDA</span>
+                        <span class="experience-period experience-period--current">24/04/2026 — Atual</span>
+                    </div>
+                    <span class="experience-role">Preparador de Amostra</span>
+                    <p class="experience-desc">Execução e padronização de processos de preparação de amostras químicas para análise, com rigoroso controle de qualidade, garantindo precisão nos resultados e confiabilidade dos registros.</p>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-item-head">
+                        <span class="experience-company">Sendas Distribuidora S/A</span>
+                        <span class="experience-period">01/11/2022 — 13/09/2024</span>
+                    </div>
+                    <span class="experience-role">Operador de Empilhadeira</span>
+                    <p class="experience-desc">Operação de empilhadeiras elétricas e a combustão em carga e descarga de caminhões, além da movimentação e organização de estoques, assegurando agilidade no fluxo de mercadorias e segurança nas operações do armazém.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STACK -->
+        <section id="stack" class="reveal">
+            <div class="section-head">
+                <div>
+                    <span class="section-eyebrow">tecnologias</span>
+                    <h2 class="section-title">Stack</h2>
+                </div>
+            </div>
+            <div class="stack-grid">
+                <div class="stack-group">
+                    <span class="stack-group-title">Linguagem</span>
+                    <div class="chip-row"><span class="chip">Python</span></div>
+                </div>
+                <div class="stack-group">
+                    <span class="stack-group-title">Frameworks &amp; APIs</span>
+                    <div class="chip-row">
+                        <span class="chip">FastAPI</span>
+                        <span class="chip">Uvicorn</span>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <span class="stack-group-title">Banco de dados</span>
+                    <div class="chip-row">
+                        <span class="chip">SQLite</span>
+                        <span class="chip">SQL</span>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <span class="stack-group-title">Dados &amp; ferramentas</span>
+                    <div class="chip-row">
+                        <span class="chip">Pandas</span>
+                        <span class="chip">Streamlit</span>
+                        <span class="chip">Excel</span>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <span class="stack-group-title">Versionamento</span>
+                    <div class="chip-row">
+                        <span class="chip">Git</span>
+                        <span class="chip">GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WEBSITES -->
+        <section id="websites" class="reveal">
+            <div class="section-head">
+                <div>
+                    <span class="section-eyebrow">no ar</span>
+                    <h2 class="section-title">Websites</h2>
+                </div>
+                <a class="section-link" href="projetos-completos.html">ver todos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="site-grid">
+                <a class="site-card site-card--calc" href="https://calculadora-inteligente-sigma.vercel.app/" target="_blank" rel="noopener noreferrer">
+                    <div class="site-body">
+                        <div class="site-card-head">
+                            <span class="site-name">Nexus Calc</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                        <span class="site-url">calculadora-inteligente-sigma.vercel.app</span>
+                        <p class="site-desc">Calculadora inteligente construída com FastAPI, feita para resolver operações lógicas e matemáticas de forma rápida e automatizada.</p>
+                    </div>
+                </a>
+
+                <a class="site-card site-card--finance" href="https://nexus-finance-lemon.vercel.app/#/login" target="_blank" rel="noopener noreferrer">
+                    <div class="site-body">
+                        <div class="site-card-head">
+                            <span class="site-name">Nexus Finance</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                        <span class="site-url">nexus-finance-lemon.vercel.app</span>
+                        <p class="site-desc">Plataforma de controle financeiro pessoal: registro de transações, categorias e metas de reserva com acompanhamento de progresso.</p>
+                    </div>
+                </a>
+
+                <a class="site-card site-card--etl" href="https://etl-com-app-metvcdp57jcwlqcpaye2jk.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                    <div class="site-body">
+                        <div class="site-card-head">
+                            <span class="site-name">ETL com Streamlit</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                        <span class="site-url">etl-com-app-metvcdp57jcwlqcpaye2jk.streamlit.app</span>
+                        <p class="site-desc">Automação de análise de dados corporativos com visualização interativa: agrupamentos, filtros e engenharia de dados.</p>
+                    </div>
+                </a>
+
+                <a class="site-card site-card--vendas" href="https://painel-vendas-etl.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                    <div class="site-body">
+                        <div class="site-card-head">
+                            <span class="site-name">Painel de Vendas</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                        <span class="site-url">painel-vendas-etl.streamlit.app</span>
+                        <p class="site-desc">Painel de BI em Python com Pandas e Plotly, transformando planilhas de vendas em métricas de faturamento e performance.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- PROJETOS -->
+        <section id="projetos" class="reveal">
+            <div class="section-head">
+                <div>
+                    <span class="section-eyebrow">código aberto</span>
+                    <h2 class="section-title">Projetos</h2>
+                </div>
+            </div>
+            <div class="project-list">
+                <a class="project-item" href="https://github.com/GMenezsz/Calculadora-Inteligente-API" target="_blank" rel="noopener noreferrer">
+                    <h3>Nexus Calc (FastAPI) <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></h3>
+                    <p>Projetada para processar operações lógicas e de cálculo de forma rápida, eficiente e automatizada.</p>
+                </a>
+                <a class="project-item" href="https://github.com/GMenezsz/Nexus-API" target="_blank" rel="noopener noreferrer">
+                    <h3>Nexus Finance (FastAPI) <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></h3>
+                    <p>Permite controlar receitas e despesas, planejar metas de economia e acompanhar relatórios financeiros, com suporte a tema claro/escuro e instalação como aplicativo.</p>
+                </a>
+                <a class="project-item" href="https://github.com/GMenezsz/Cadastro-Corporativo-v2" target="_blank" rel="noopener noreferrer">
+                    <h3>Cadastro Corporativo (FastAPI) <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></h3>
+                    <p>Sistema backend para gerenciamento de funcionários e controle de acesso corporativo, com criptografia de CPFs para proteção de dados sensíveis.</p>
+                </a>
+                <a class="project-item" href="https://github.com/GMenezsz/ETL-com-Streamlit" target="_blank" rel="noopener noreferrer">
+                    <h3>ETL com Streamlit <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></h3>
+                    <p>Automação de análise de dados corporativos e visualização em interface web interativa, aplicando boas práticas de engenharia de dados.</p>
+                </a>
+                <a class="project-item" href="https://github.com/GMenezsz/Automacao-de-Planilha" target="_blank" rel="noopener noreferrer">
+                    <h3>Automação e Análise de Dados <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></h3>
+                    <p>Script em Python com Pandas para automatizar limpeza, transformação, cruzamento e resumo de dados de vendas, com exportação em Excel.</p>
+                </a>
+                <a class="project-item" href="https://github.com/GMenezsz/Painel-de-Vendas" target="_blank" rel="noopener noreferrer">
+                    <h3>Painel de Vendas <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></h3>
+                    <p>Painel de BI interativo em Python, com Pandas para o pipeline de dados e Streamlit + Plotly para a visualização.</p>
+                </a>
+            </div>
+            <div class="github-redirect">
+                <span>Acesse meu GitHub para mais:</span>
+                <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer">GMenezsz</a>
+            </div>
+        </section>
 
     </main>
 
@@ -312,7 +315,7 @@
         </div>
     </footer>
 
-    <!-- MODAL: ESCOLHA DE CURRÍCULO (fora do master-card p/ não ser cortado por overflow) -->
+    <!-- MODAL: ESCOLHA DE CURRÍCULO -->
     <div class="cv-modal" id="cv-modal" hidden>
         <div class="cv-modal-backdrop" data-cv-close></div>
         <div class="cv-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
@@ -321,31 +324,32 @@
                 <button type="button" class="cv-modal-close" data-cv-close aria-label="Fechar">&times;</button>
             </div>
             <div class="cv-modal-options">
-                <a class="cv-option" href="assets/curriculos/Curriculo-Backend-Gabriel-Menezes.pdf" download>
+                <button type="button" class="cv-option" data-cv-file="assets/curriculos/Curriculo-Backend-Gabriel-Menezes.pdf" data-cv-name="Curriculo-Backend-Gabriel-Menezes.pdf">
                     <div class="cv-option-head">
                         <i class="fa-solid fa-server" aria-hidden="true"></i>
                         <span>Currículo — Backend</span>
                         <i class="fa-solid fa-download cv-option-icon" aria-hidden="true"></i>
                     </div>
                     <p>Foco em APIs REST, FastAPI e arquitetura backend.</p>
-                </a>
-                <a class="cv-option" href="assets/curriculos/Curriculo-Dados-Gabriel-Menezes.pdf" download>
+                </button>
+                <button type="button" class="cv-option" data-cv-file="assets/curriculos/Curriculo-Dados-Gabriel-Menezes.pdf" data-cv-name="Curriculo-Dados-Gabriel-Menezes.pdf">
                     <div class="cv-option-head">
                         <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
                         <span>Currículo — Dados</span>
                         <i class="fa-solid fa-download cv-option-icon" aria-hidden="true"></i>
                     </div>
                     <p>Foco em ETL, Pandas e dashboards de Business Intelligence.</p>
-                </a>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- VISUALIZADOR: CERTIFICADO (flutua por cima, sem escurecer o portfólio) -->
-    <div class="cert-viewer" id="cert-modal" role="dialog" aria-modal="true" aria-label="Certificado Introdução à Cibersegurança" hidden>
-        <div class="cert-viewer-stage">
-            <canvas id="cert-modal-canvas"></canvas>
-            <button type="button" class="cert-viewer-close" data-cert-close aria-label="Fechar certificado">&times;</button>
+    <!-- MODAL: CERTIFICADO -->
+    <div class="cert-modal" id="cert-modal" hidden>
+        <div class="cert-modal-backdrop" data-cert-close></div>
+        <div class="cert-modal-frame" role="dialog" aria-modal="true" aria-label="Certificado">
+            <button type="button" class="cert-modal-close" data-cert-close aria-label="Fechar">&times;</button>
+            <img id="cert-modal-img" src="" alt="Certificado">
         </div>
     </div>
 
