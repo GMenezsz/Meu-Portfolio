@@ -2,39 +2,50 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <script>document.documentElement.classList.add("js");</script>
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem("gm-theme");
+                var theme = (saved === "light" || saved === "dark")
+                    ? saved
+                    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                document.documentElement.setAttribute("data-theme", theme);
+            } catch (e) {}
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#0a0d12">
-    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#f6f7f9">
     <title>Todos os projetos | Gabriel Menezes</title>
     <meta name="description" content="Lista completa dos websites e projetos de Gabriel Menezes, com descrições e links de acesso.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="icon-192.png" />
 </head>
 <body id="topo">
 
-    <canvas id="bg-matrix-canvas" class="bg-matrix-canvas" aria-hidden="true"></canvas>
-
     <!-- HEADER -->
     <header class="header">
         <div class="header-container">
             <a href="index.html#inicio" class="logo">GMenezs</a>
             <nav class="nav-links" aria-label="Navegação principal">
+                <a href="index.html#sobre">sobre</a>
+                <a href="index.html#experiencia">experiência</a>
                 <a href="index.html#stack">stack</a>
                 <a href="index.html#websites">websites</a>
                 <a href="index.html#projetos">projetos</a>
-                <a href="index.html#experiencia">experiência</a>
-                <a href="index.html#sobre-mim">sobre</a>
             </nav>
-            <div class="header-socials">
-                <a href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <div class="header-actions">
+                <button type="button" class="icon-btn theme-toggle" id="theme-toggle-btn" aria-label="Alternar tema claro/escuro">
+                    <i class="fa-solid fa-sun" aria-hidden="true"></i>
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                </button>
+                <a class="icon-btn" href="https://github.com/GMenezsz" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/gabriel-menezes-9367793a1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <a class="icon-btn" href="https://www.linkedin.com/in/gabriel-menezes-9367793a1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
             </div>
@@ -42,103 +53,97 @@
     </header>
 
     <main class="page">
-        <div class="master-card">
-            <div class="window-bar master-card-bar">
-                <span class="window-dots"><span></span><span></span><span></span></span>
-                <span class="window-title">todos-os-projetos/</span>
-                <a class="ver-mais-link" href="index.html#inicio"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> voltar</a>
+        <div>
+            <div class="page-heading">
+                <div>
+                    <span class="section-eyebrow">no ar</span>
+                    <h1 class="section-title">Todos os websites</h1>
+                </div>
+                <a class="back-link" href="index.html#websites"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> voltar</a>
             </div>
 
-            <div class="master-card-body master-card-body--full">
-                <div class="profile-content profile-content--full">
+            <div class="showcase-list">
 
-                    <!-- WEBSITES -->
-                    <div class="showcase-list">
-
-                        <article class="showcase-item showcase-item--calc" id="nexus-calc">
-                            <div class="showcase-item-head">
-                                <h2 class="showcase-name">Nexus Calc</h2>
-                                <a class="showcase-visit" href="https://calculadora-inteligente-sigma.vercel.app/" target="_blank" rel="noopener noreferrer">
-                                    acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <span class="showcase-url">calculadora-inteligente-sigma.vercel.app</span>
-
-                            <div class="showcase-media">
-                                <img src="assets/screenshots/nexus-calc.png" alt="Captura de tela do Nexus Calc" loading="lazy">
-                            </div>
-
-                            <div class="showcase-card">
-                                <h3 class="showcase-card-title">Calculadora Inteligente</h3>
-                                <p><span class="showcase-pulse-dot" aria-hidden="true"></span>Uma aplicação web full-stack desenvolvida para centralizar diversas ferramentas matemáticas e financeiras úteis para o dia a dia, estudos, trabalho autônomo e mobilidade.</p>
-                                <p><span class="showcase-pulse-dot" aria-hidden="true"></span>O projeto foi construído com uma arquitetura desacoplada (API em Python com FastAPI e Front-end moderno) e conta com suporte a PWA (Progressive Web App), permitindo que seja instalado diretamente na tela inicial do celular.</p>
-                            </div>
-                        </article>
-
-                        <article class="showcase-item showcase-item--finance" id="nexus-finance">
-                            <div class="showcase-item-head">
-                                <h2 class="showcase-name">Nexus Finance</h2>
-                                <a class="showcase-visit" href="https://nexus-finance-lemon.vercel.app/#/login" target="_blank" rel="noopener noreferrer">
-                                    acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <span class="showcase-url">nexus-finance-lemon.vercel.app</span>
-
-                            <div class="showcase-media">
-                                <img src="assets/screenshots/nexus-finance.png" alt="Captura de tela do Nexus Finance" loading="lazy">
-                            </div>
-
-                            <div class="showcase-card">
-                                <p><span class="showcase-pulse-dot" aria-hidden="true"></span>Nexus Finance é um PWA (Progressive Web App) de gestão financeira pessoal. Permite controlar receitas e despesas, planejar metas de economia e acompanhar relatórios financeiros, tudo em uma interface responsiva com suporte a tema claro/escuro e instalação como aplicativo.</p>
-                            </div>
-                        </article>
-
-                        <article class="showcase-item showcase-item--etl" id="etl-com-streamlit">
-                            <div class="showcase-item-head">
-                                <h2 class="showcase-name">ETL com Streamlit</h2>
-                                <a class="showcase-visit" href="https://etl-com-app-metvcdp57jcwlqcpaye2jk.streamlit.app/" target="_blank" rel="noopener noreferrer">
-                                    acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <span class="showcase-url">etl-com-app-metvcdp57jcwlqcpaye2jk.streamlit.app</span>
-
-                            <div class="showcase-media">
-                                <img src="assets/screenshots/etl-com-streamlit.png" alt="Captura de tela do ETL com Streamlit" loading="lazy">
-                            </div>
-
-                            <div class="showcase-card">
-                                <p> <span class="showcase-pulse-dot" aria-hidden="true"></span>Projeto desenvolvido para automação de análise de dados corporativos e visualização em interface web interativa, aplicando boas práticas de manipulação de dados, agrupamentos, filtros e engenharia de dados.</p>
-                                <h4 class="showcase-card-subtitle">Tecnologias Utilizadas</h4>
-                                <ul class="showcase-card-list">
-                                    <li>Python (Linguagem principal)</li>
-                                    <li>Pandas (Biblioteca para manipulação e análise de dados)</li>
-                                    <li>Streamlit (Framework para criação de aplicações web interativas)</li>
-                                </ul>
-                            </div>
-                        </article>
-
-                        <article class="showcase-item showcase-item--vendas" id="painel-de-vendas">
-                            <div class="showcase-item-head">
-                                <h2 class="showcase-name">Painel de Vendas</h2>
-                                <a class="showcase-visit" href="https://painel-vendas-etl.streamlit.app/" target="_blank" rel="noopener noreferrer">
-                                    acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                            <span class="showcase-url">painel-vendas-etl.streamlit.app</span>
-
-                            <div class="showcase-media">
-                                <img src="assets/screenshots/painel-de-vendas.png" alt="Captura de tela do Painel de Vendas" loading="lazy">
-                            </div>
-
-                            <div class="showcase-card">
-                                <p><span class="showcase-pulse-dot" aria-hidden="true"></span>Um painel de Business Intelligence (BI) interativo e moderno desenvolvido em Python, utilizando Pandas para o pipeline de dados (ETL) e Streamlit junto com Plotly para a interface web de visualização.</p>
-                                <p><span class="showcase-pulse-dot" aria-hidden="true"></span>O projeto foi construído para transformar planilhas brutas de vendas em métricas de negócio claras, automatizando análises de faturamento, ticket médio, volume físico e performance por loja/produto.</p>
-                            </div>
-                        </article>
-
+                <article class="showcase-item showcase-item--calc" id="nexus-calc">
+                    <div class="showcase-media">
+                        <img src="assets/screenshots/nexus-calc.png" alt="Captura de tela do Nexus Calc" loading="lazy">
                     </div>
+                    <div>
+                        <div class="showcase-item-head">
+                            <h2 class="showcase-name">Nexus Calc</h2>
+                            <a class="showcase-visit" href="https://calculadora-inteligente-sigma.vercel.app/" target="_blank" rel="noopener noreferrer">
+                                acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <span class="showcase-url">calculadora-inteligente-sigma.vercel.app</span>
+                        <div class="showcase-card">
+                            <p>Uma aplicação web full-stack desenvolvida para centralizar diversas ferramentas matemáticas e financeiras úteis para o dia a dia, estudos, trabalho autônomo e mobilidade.</p>
+                            <p>Construída com arquitetura desacoplada (API em Python com FastAPI e front-end moderno) e suporte a PWA, permitindo instalação direto na tela inicial do celular.</p>
+                        </div>
+                    </div>
+                </article>
 
-                </div>
+                <article class="showcase-item showcase-item--finance" id="nexus-finance">
+                    <div class="showcase-media">
+                        <img src="assets/screenshots/nexus-finance.png" alt="Captura de tela do Nexus Finance" loading="lazy">
+                    </div>
+                    <div>
+                        <div class="showcase-item-head">
+                            <h2 class="showcase-name">Nexus Finance</h2>
+                            <a class="showcase-visit" href="https://nexus-finance-lemon.vercel.app/#/login" target="_blank" rel="noopener noreferrer">
+                                acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <span class="showcase-url">nexus-finance-lemon.vercel.app</span>
+                        <div class="showcase-card">
+                            <p>PWA de gestão financeira pessoal. Permite controlar receitas e despesas, planejar metas de economia e acompanhar relatórios financeiros, com suporte a tema claro/escuro e instalação como aplicativo.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="showcase-item showcase-item--etl" id="etl-com-streamlit">
+                    <div class="showcase-media">
+                        <img src="assets/screenshots/etl-com-streamlit.png" alt="Captura de tela do ETL com Streamlit" loading="lazy">
+                    </div>
+                    <div>
+                        <div class="showcase-item-head">
+                            <h2 class="showcase-name">ETL com Streamlit</h2>
+                            <a class="showcase-visit" href="https://etl-com-app-metvcdp57jcwlqcpaye2jk.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                                acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <span class="showcase-url">etl-com-app-metvcdp57jcwlqcpaye2jk.streamlit.app</span>
+                        <div class="showcase-card">
+                            <p>Projeto para automação de análise de dados corporativos e visualização em interface web interativa, aplicando boas práticas de manipulação de dados, agrupamentos, filtros e engenharia de dados.</p>
+                            <h3 class="showcase-card-subtitle">Tecnologias utilizadas</h3>
+                            <ul class="showcase-card-list">
+                                <li>Python (linguagem principal)</li>
+                                <li>Pandas (manipulação e análise de dados)</li>
+                                <li>Streamlit (aplicações web interativas)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="showcase-item showcase-item--vendas" id="painel-de-vendas">
+                    <div class="showcase-media">
+                        <img src="assets/screenshots/painel-de-vendas.png" alt="Captura de tela do Painel de Vendas" loading="lazy">
+                    </div>
+                    <div>
+                        <div class="showcase-item-head">
+                            <h2 class="showcase-name">Painel de Vendas</h2>
+                            <a class="showcase-visit" href="https://painel-vendas-etl.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                                acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <span class="showcase-url">painel-vendas-etl.streamlit.app</span>
+                        <div class="showcase-card">
+                            <p>Painel de Business Intelligence interativo e moderno desenvolvido em Python, com Pandas para o pipeline de dados (ETL) e Streamlit + Plotly para a visualização.</p>
+                            <p>Transforma planilhas brutas de vendas em métricas de negócio claras, automatizando análises de faturamento, ticket médio, volume físico e performance por loja/produto.</p>
+                        </div>
+                    </div>
+                </article>
+
             </div>
         </div>
     </main>
