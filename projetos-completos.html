@@ -6,15 +6,13 @@
         (function () {
             try {
                 var saved = localStorage.getItem("gm-theme");
-                var theme = (saved === "light" || saved === "dark")
-                    ? saved
-                    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                var theme = (saved === "light" || saved === "dark") ? saved : "dark";
                 document.documentElement.setAttribute("data-theme", theme);
             } catch (e) {}
         })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#f6f7f9">
+    <meta name="theme-color" content="#0b0d12">
     <title>Todos os projetos | Gabriel Menezes</title>
     <meta name="description" content="Lista completa dos websites e projetos de Gabriel Menezes, com descrições e links de acesso.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -140,6 +138,30 @@
                         <div class="showcase-card">
                             <p>Painel de Business Intelligence interativo e moderno desenvolvido em Python, com Pandas para o pipeline de dados (ETL) e Streamlit + Plotly para a visualização.</p>
                             <p>Transforma planilhas brutas de vendas em métricas de negócio claras, automatizando análises de faturamento, ticket médio, volume físico e performance por loja/produto.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="showcase-item showcase-item--etlvendas" id="etl-vendas-brasil">
+                    <div class="showcase-media">
+                        <img src="assets/screenshots/etl-vendas-brasil.png" alt="Captura de tela do ETL Vendas Brasil" loading="lazy">
+                    </div>
+                    <div>
+                        <div class="showcase-item-head">
+                            <h2 class="showcase-name">ETL Vendas Brasil</h2>
+                            <a class="showcase-visit" href="https://etl-vendas-brasil.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                                acessar site <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <span class="showcase-url">etl-vendas-brasil.streamlit.app</span>
+                        <div class="showcase-card">
+                            <p>Pipeline de Extração, Transformação e Carga (ETL) desenvolvido em Python utilizando a biblioteca Pandas para processar bases de dados de vendas de lojas brasileiras, preparando os dados para análises de negócios (BI) e futuras integrações com dashboards interativos.</p>
+                            <h3 class="showcase-card-subtitle">Tecnologias Utilizadas</h3>
+                            <ul class="showcase-card-list">
+                                <li>Python 3</li>
+                                <li>Pandas (Manipulação e tratamento de dados)</li>
+                                <li>Openpyxl (Leitura de arquivos Excel)</li>
+                            </ul>
                         </div>
                     </div>
                 </article>
