@@ -6,15 +6,13 @@
         (function () {
             try {
                 var saved = localStorage.getItem("gm-theme");
-                var theme = (saved === "light" || saved === "dark")
-                    ? saved
-                    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                var theme = (saved === "light" || saved === "dark") ? saved : "dark";
                 document.documentElement.setAttribute("data-theme", theme);
             } catch (e) {}
         })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#f6f7f9">
+    <meta name="theme-color" content="#0b0d12">
     <title>Gabriel Menezes | Desenvolvedor Backend</title>
     <meta name="description" content="Portfólio de Gabriel Menezes, desenvolvedor backend focado em Python, FastAPI e modelagem de dados.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,17 +60,23 @@
                 </div>
                 <p class="hero-status">
                     <span class="status-dot" aria-hidden="true"></span>
-                    Disponível para novos projetos
+                    <span class="hero-status-text">Disponível para novos projetos</span>
                 </p>
                 <h1 class="hero-name">Gabriel Menezes</h1>
                 <p class="hero-role">Desenvolvedor Backend</p>
                 <p class="hero-bio">
                     Construo APIs REST com Python e FastAPI, modelo dados e cuido de performance
-                    do início ao fim — de scripts de ETL a sistemas com autenticação e persistência.
+                    do início ao fim de scripts de ETL a sistemas com autenticação e persistência.
                 </p>
                 <div class="hero-meta">
                     <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Coronel Fabriciano, MG — Brasil</span>
-                    <a class="meta-item" href="mailto:gabriel26guedes@gmail.com"><i class="fa-solid fa-envelope"></i> gabriel26guedes@gmail.com</a>
+                    <span class="meta-item meta-item--email">
+                        <a href="mailto:gabriel26guedes@gmail.com"><i class="fa-solid fa-envelope"></i> gabriel26guedes@gmail.com</a>
+                        <button type="button" class="copy-email-btn" data-copy-email="gabriel26guedes@gmail.com" aria-label="Copiar email">
+                            <i class="fa-solid fa-copy" aria-hidden="true"></i>
+                            <span class="copy-email-tooltip">Copiar email</span>
+                        </button>
+                    </span>
                 </div>
             </div>
             <div class="profile-side">
@@ -123,7 +127,7 @@
                     <p>Também atuo com engenharia de dados: pipelines de ETL em Pandas e painéis analíticos interativos com Streamlit, transformando dados brutos em relatórios e métricas de negócio.</p>
                 </div>
                 <ul class="about-list">
-                    <li><strong>Antes da programação:</strong> experiência em controle de qualidade e logística — trouxe pra código a mesma disciplina de processo, precisão e conferência de resultados.</li>
+                    <li><strong>Antes da programação:</strong> experiência em controle de qualidade e logística trouxe pra código a mesma disciplina de processo, precisão e conferência de resultados.</li>
                     <li><strong>Foco atual:</strong> arquitetura backend, segurança de dados sensíveis e automação de processos.</li>
                 </ul>
             </div>
@@ -166,25 +170,25 @@
                 </div>
             </div>
             <div class="stack-grid">
-                <div class="stack-group">
+                <div class="stack-group stack-group--lang">
                     <span class="stack-group-title">Linguagem</span>
                     <div class="chip-row"><span class="chip">Python</span></div>
                 </div>
-                <div class="stack-group">
+                <div class="stack-group stack-group--frameworks">
                     <span class="stack-group-title">Frameworks &amp; APIs</span>
                     <div class="chip-row">
                         <span class="chip">FastAPI</span>
                         <span class="chip">Uvicorn</span>
                     </div>
                 </div>
-                <div class="stack-group">
+                <div class="stack-group stack-group--db">
                     <span class="stack-group-title">Banco de dados</span>
                     <div class="chip-row">
                         <span class="chip">SQLite</span>
                         <span class="chip">SQL</span>
                     </div>
                 </div>
-                <div class="stack-group">
+                <div class="stack-group stack-group--data">
                     <span class="stack-group-title">Dados &amp; ferramentas</span>
                     <div class="chip-row">
                         <span class="chip">Pandas</span>
@@ -192,7 +196,7 @@
                         <span class="chip">Excel</span>
                     </div>
                 </div>
-                <div class="stack-group">
+                <div class="stack-group stack-group--vcs">
                     <span class="stack-group-title">Versionamento</span>
                     <div class="chip-row">
                         <span class="chip">Git</span>
@@ -209,7 +213,7 @@
                     <span class="section-eyebrow">no ar</span>
                     <h2 class="section-title">Websites</h2>
                 </div>
-                <a class="section-link" href="projetos-completos.html">ver todos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                <a class="section-link section-link--card" href="projetos-completos.html">ver todos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </div>
             <div class="site-grid">
                 <a class="site-card site-card--calc" href="https://calculadora-inteligente-sigma.vercel.app/" target="_blank" rel="noopener noreferrer">
@@ -253,6 +257,17 @@
                         </div>
                         <span class="site-url">painel-vendas-etl.streamlit.app</span>
                         <p class="site-desc">Painel de BI em Python com Pandas e Plotly, transformando planilhas de vendas em métricas de faturamento e performance.</p>
+                    </div>
+                </a>
+
+                <a class="site-card site-card--etlvendas" href="https://etl-vendas-brasil.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                    <div class="site-body">
+                        <div class="site-card-head">
+                            <span class="site-name">ETL Vendas Brasil</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                        <span class="site-url">etl-vendas-brasil.streamlit.app</span>
+                        <p class="site-desc">Pipeline de Extração, Transformação e Carga (ETL) desenvolvido em Python utilizando a biblioteca Pandas para processar bases de dados de vendas de lojas brasileiras, preparando os dados para análises de negócios (BI) e futuras integrações com dashboards interativos.</p>
                     </div>
                 </a>
             </div>
