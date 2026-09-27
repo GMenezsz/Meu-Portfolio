@@ -3,6 +3,120 @@ document.addEventListener("DOMContentLoaded", () => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ==========================================================
+    // 0. INTRO DO CARD DE PERFIL: digitação do nome/cargo e
+    //    descriptografia do status
+    // ==========================================================
+    // Ordem:
+    //   1) o nome "Gabriel Menezes" começa a ser digitado;
+    //   2) 1s depois de o nome ter começado, "Desenvolvedor Backend"
+    //      também começa a digitar (em paralelo);
+    //   3) assim que o nome termina de digitar, o texto de status
+    //      ("Disponível para novos projetos") roda uma animação de
+    //      descriptografia (letra por letra, com caracteres aleatórios).
+    // O restante do card de perfil (avatar, bio, contatos, formação e
+    // botões) já fica visível desde o carregamento da página, sem
+    // esperar nenhuma animação terminar. O header (logo e menu) também
+    // fica normal o tempo todo, sem nenhuma animação de texto.
+    function runHeroIntro() {
+        const nameEl = document.querySelector(".hero-name");
+        const roleEl = document.querySelector(".hero-role");
+        const statusTextEl = document.querySelector(".hero-status-text");
+
+        // Esta introdução só existe na página com o card de perfil.
+        if (!nameEl || !roleEl || !statusTextEl) return;
+
+        const nameText = nameEl.textContent.trim();
+        const roleText = roleEl.textContent.trim();
+        const statusText = statusTextEl.textContent.trim();
+
+        if (prefersReducedMotion) {
+            nameEl.textContent = nameText;
+            roleEl.textContent = roleText;
+            statusTextEl.textContent = statusText;
+            return;
+        }
+
+        nameEl.textContent = "";
+        roleEl.textContent = "";
+        nameEl.classList.add("typing-caret");
+        roleEl.classList.add("typing-caret");
+
+        function typeText(el, text, speed, onDone) {
+            let i = 0;
+            (function step() {
+                if (i <= text.length) {
+                    el.textContent = text.slice(0, i);
+                    i += 1;
+                    setTimeout(step, speed);
+                } else if (onDone) {
+                    onDone();
+                }
+            })();
+        }
+
+        const DECRYPT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*";
+
+        function scrambled(text, revealedCount) {
+            let output = "";
+            for (let idx = 0; idx < text.length; idx += 1) {
+                if (text[idx] === " " || idx < revealedCount) {
+                    output += text[idx];
+                } else {
+                    output += DECRYPT_CHARS[Math.floor(Math.random() * DECRYPT_CHARS.length)];
+                }
+            }
+            return output;
+        }
+
+        // Embaralha o status DESDE JÁ, antes mesmo de o nome terminar de
+        // digitar, para o texto real nunca ficar exposto antes da hora.
+        let idleScramble = setInterval(() => {
+            statusTextEl.textContent = scrambled(statusText, 0);
+        }, 55);
+
+        function decryptStatus(onDone) {
+            clearInterval(idleScramble);
+            const revealStep = 45; // ms até revelar cada letra correta
+            let revealedCount = 0;
+
+            const scrambleInterval = setInterval(() => {
+                statusTextEl.textContent = scrambled(statusText, revealedCount);
+            }, 35);
+
+            const revealTimer = setInterval(() => {
+                revealedCount += 1;
+                if (revealedCount > statusText.length) {
+                    clearInterval(revealTimer);
+                    clearInterval(scrambleInterval);
+                    statusTextEl.textContent = statusText;
+                    if (onDone) onDone();
+                }
+            }, revealStep);
+        }
+
+        // 1) nome começa a digitar imediatamente
+        typeText(nameEl, nameText, 70, () => {
+            nameEl.classList.remove("typing-caret");
+
+            // 3) nome terminou -> começa a descriptografia do status
+            decryptStatus();
+        });
+
+        // 2) cargo começa a digitar 1s depois do nome ter iniciado
+        setTimeout(() => {
+            typeText(roleEl, roleText, 60, () => {
+                roleEl.classList.remove("typing-caret");
+            });
+        }, 1000);
+    }
+
+    runHeroIntro();
+
+    // A revelação por rolagem roda desde já — nada no restante da
+    // página fica travado esperando a introdução do card.
+    setupReveal();
+
+    // ==========================================================
     // 1. TEMA CLARO / ESCURO
     // ==========================================================
     (function setupTheme() {
@@ -17,11 +131,14 @@ document.addEventListener("DOMContentLoaded", () => {
         function getPreferredTheme() {
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved === "light" || saved === "dark") return saved;
-            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            return "dark"; // tema padrão do site, até o usuário escolher outro
         }
 
         applyTheme(getPreferredTheme());
 
+        // A troca de tema só troca as cores — a digitação/descriptografia
+        // do card de perfil acontece apenas ao carregar a página (ver
+        // runHeroIntro), não ao clicar no botão de tema.
         if (toggleBtn) {
             toggleBtn.addEventListener("click", () => {
                 const current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
@@ -30,19 +147,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem(STORAGE_KEY, next);
             });
         }
-
-        const media = window.matchMedia("(prefers-color-scheme: dark)");
-        media.addEventListener?.("change", (e) => {
-            if (!localStorage.getItem(STORAGE_KEY)) {
-                applyTheme(e.matches ? "dark" : "light");
-            }
-        });
     })();
 
     // ==========================================================
     // 2. ENTRADA SUAVE DOS ELEMENTOS (fade-in ao rolar)
     // ==========================================================
-    (function setupReveal() {
+    function setupReveal() {
         const items = document.querySelectorAll(".reveal");
         if (!items.length) return;
 
@@ -64,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         items.forEach((el) => observer.observe(el));
-    })();
+    }
 
     // ==========================================================
     // 3. MODAL: ESCOLHA DE CURRÍCULO
@@ -175,6 +285,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
         modal.querySelectorAll("[data-cert-close]").forEach((el) => {
             el.addEventListener("click", closeModal);
+        });
+    })();
+
+    // ==========================================================
+    // 3.2 COPIAR EMAIL
+    // ==========================================================
+    (function setupCopyEmail() {
+        const buttons = document.querySelectorAll("[data-copy-email]");
+        if (!buttons.length) return;
+
+        function fallbackCopy(text) {
+            try {
+                const textarea = document.createElement("textarea");
+                textarea.value = text;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        buttons.forEach((btn) => {
+            const tooltip = btn.querySelector(".copy-email-tooltip");
+            const originalTooltipText = tooltip ? tooltip.textContent : null;
+            let resetTimer = null;
+
+            function showCopied() {
+                btn.classList.add("is-copied");
+                if (tooltip) tooltip.textContent = "Copiado!";
+                if (resetTimer) clearTimeout(resetTimer);
+                resetTimer = setTimeout(() => {
+                    btn.classList.remove("is-copied");
+                    if (tooltip && originalTooltipText) tooltip.textContent = originalTooltipText;
+                }, 1800);
+            }
+
+            btn.addEventListener("click", () => {
+                const email = btn.getAttribute("data-copy-email");
+                if (!email) return;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard
+                        .writeText(email)
+                        .then(showCopied)
+                        .catch(() => {
+                            if (fallbackCopy(email)) showCopied();
+                        });
+                } else if (fallbackCopy(email)) {
+                    showCopied();
+                }
+            });
         });
     })();
 
