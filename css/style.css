@@ -22,6 +22,7 @@
     --site-finance: #a855f7;
     --site-etl: #f97316;
     --site-vendas: #10b981;
+    --site-etlvendas: #eab308;
 
     --radius: 14px;
     --radius-sm: 9px;
@@ -133,6 +134,45 @@ button { font: inherit; }
 .reveal.in-view { opacity: 1; transform: none; }
 
 /* ============================================
+   INTRO: digitação, descriptografia e revelação
+   ============================================ */
+
+/* Cursor piscando enquanto o nome/cargo estão "digitando" */
+.typing-caret::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 0.95em;
+    margin-left: 3px;
+    vertical-align: -0.1em;
+    background: currentColor;
+    animation: caret-blink 0.85s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+    50% { opacity: 0; }
+}
+
+/* Gradiente de texto (só no tema escuro): roxo (tema) à direita,
+   perdendo a cor até ficar na cor normal do texto à esquerda. */
+.hero-name,
+.logo {
+    background-image: linear-gradient(to right, var(--text) 0%, var(--text) 35%, var(--accent) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+/* No tema claro o gradiente some: texto normal, sólido. */
+[data-theme="light"] .hero-name,
+[data-theme="light"] .logo {
+    background-image: none;
+    color: var(--text);
+    -webkit-text-fill-color: var(--text);
+}
+
+/* ============================================
    HEADER
    ============================================ */
 .header {
@@ -151,6 +191,10 @@ button { font: inherit; }
     background: rgba(11, 13, 18, 0.78);
 }
 
+[data-theme="light"] .header {
+    box-shadow: 0 4px 20px rgba(16, 24, 40, 0.08);
+}
+
 .header-container {
     max-width: var(--maxw);
     margin: 0 auto;
@@ -160,7 +204,6 @@ button { font: inherit; }
 }
 
 .logo {
-    color: var(--text);
     font-weight: 700;
     font-size: 1.05rem;
     text-decoration: none;
@@ -286,6 +329,24 @@ button { font: inherit; }
 }
 .section-link:hover { color: var(--accent-strong); }
 
+.section-link--card {
+    background: var(--bg-chip);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 0.8rem;
+    color: var(--text-dim);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+.section-link--card:hover,
+.section-link--card:focus-visible {
+    transform: scale(1.05);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-sm);
+    color: var(--accent);
+}
+.section-link--card i { transition: transform 0.2s ease; }
+.section-link--card:hover i { transform: scale(1.1); }
+
 /* ============================================
    PERFIL (card principal)
    ============================================ */
@@ -348,6 +409,7 @@ button { font: inherit; }
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--status);
+    margin-top: 1.3rem;
     margin-bottom: 1.1rem;
 }
 
@@ -364,6 +426,18 @@ button { font: inherit; }
     0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5); transform: scale(1); }
     60% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); transform: scale(1.25); }
     100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); transform: scale(1); }
+}
+
+/* No tema claro, o status fica em preto (texto e bolinha) em vez de verde */
+[data-theme="light"] .hero-status { color: var(--text); }
+[data-theme="light"] .status-dot {
+    background: var(--text);
+    animation-name: pulse-dot-light;
+}
+@keyframes pulse-dot-light {
+    0% { box-shadow: 0 0 0 0 rgba(18, 21, 27, 0.4); transform: scale(1); }
+    60% { box-shadow: 0 0 0 10px rgba(18, 21, 27, 0); transform: scale(1.25); }
+    100% { box-shadow: 0 0 0 0 rgba(18, 21, 27, 0); transform: scale(1); }
 }
 
 .hero-name {
@@ -405,6 +479,74 @@ button { font: inherit; }
 }
 .meta-item i { color: var(--accent); }
 a.meta-item:hover { color: var(--accent); }
+
+.meta-item--email {
+    gap: 0.35rem;
+}
+.meta-item--email a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.meta-item--email a:hover { color: var(--accent); }
+
+.copy-email-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-chip);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.copy-email-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+.copy-email-btn i { font-size: 0.75rem; }
+.copy-email-btn.is-copied {
+    color: #22c55e;
+    border-color: #22c55e;
+}
+
+.copy-email-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    white-space: nowrap;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.3rem 0.55rem;
+    border-radius: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.copy-email-btn:hover .copy-email-tooltip,
+.copy-email-btn:focus-visible .copy-email-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+.copy-email-btn.is-copied .copy-email-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    color: #22c55e;
+    border-color: #22c55e;
+}
 
 .btn {
     display: inline-flex;
@@ -529,16 +671,55 @@ a.meta-item:hover { color: var(--accent); }
    ============================================ */
 .stack-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
     gap: 1rem;
 }
 
+@property --stack-border-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
 .stack-group {
+    --stack-border-angle: 0deg;
+    position: relative;
+    z-index: 0;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.1rem 1.2rem;
+    padding: 1.4rem 1.5rem;
     box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stack-group--lang { --stack-color: #3b82f6; }
+.stack-group--frameworks { --stack-color: #a855f7; }
+.stack-group--db { --stack-color: #10b981; }
+.stack-group--data { --stack-color: #f59e0b; }
+.stack-group--vcs { --stack-color: #ef4444; }
+
+.stack-group::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(from var(--stack-border-angle), transparent 0%, var(--stack-color, var(--accent)) 22%, transparent 44%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: stack-border-spin 2.6s linear infinite;
+}
+
+.stack-group:hover {
+    transform: scale(1.045);
+    box-shadow: var(--shadow-md);
+}
+
+@keyframes stack-border-spin {
+    to { --stack-border-angle: 360deg; }
 }
 
 .stack-group-title {
@@ -547,13 +728,13 @@ a.meta-item:hover { color: var(--accent); }
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--text-faint);
-    margin-bottom: 0.7rem;
+    margin-bottom: 1.1rem;
 }
 
 .chip-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.6rem;
 }
 
 .chip {
@@ -561,7 +742,7 @@ a.meta-item:hover { color: var(--accent); }
     color: var(--text);
     font-size: 0.82rem;
     font-weight: 500;
-    padding: 0.35rem 0.7rem;
+    padding: 0.4rem 0.85rem;
     border-radius: 100px;
     border: 1px solid var(--border);
 }
@@ -571,7 +752,7 @@ a.meta-item:hover { color: var(--accent); }
    ============================================ */
 .site-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
     gap: 1.2rem;
 }
 
@@ -593,6 +774,7 @@ a.meta-item:hover { color: var(--accent); }
 .site-card--finance { --card-color: var(--site-finance); }
 .site-card--etl { --card-color: var(--site-etl); }
 .site-card--vendas { --card-color: var(--site-vendas); }
+.site-card--etlvendas { --card-color: var(--site-etlvendas); }
 
 .site-media {
     aspect-ratio: 16 / 10;
@@ -780,7 +962,7 @@ a.meta-item:hover { color: var(--accent); }
    ============================================ */
 .education-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
     gap: 1rem;
 }
 
@@ -850,7 +1032,7 @@ a.meta-item:hover { color: var(--accent); }
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.2rem;
+    padding: calc(1.2rem + var(--safe-top)) calc(1.2rem + var(--safe-right)) calc(1.2rem + var(--safe-bottom)) calc(1.2rem + var(--safe-left));
 }
 
 .cv-modal[hidden] { display: none; }
@@ -869,6 +1051,8 @@ a.meta-item:hover { color: var(--accent); }
     border-radius: var(--radius);
     box-shadow: var(--shadow-md);
     width: min(440px, 100%);
+    max-height: 100%;
+    overflow-y: auto;
     padding: 1.4rem;
 }
 
@@ -1073,6 +1257,7 @@ a.meta-item:hover { color: var(--accent); }
 .showcase-item--finance { --card-color: var(--site-finance); }
 .showcase-item--etl { --card-color: var(--site-etl); }
 .showcase-item--vendas { --card-color: var(--site-vendas); }
+.showcase-item--etlvendas { --card-color: var(--site-etlvendas); }
 
 .showcase-media {
     background: var(--bg-chip);
@@ -1168,6 +1353,16 @@ a.meta-item:hover { color: var(--accent); }
 @media (max-width: 640px) {
     .footer-container { flex-direction: column; gap: 0.9rem; text-align: center; }
     .section-head { flex-direction: column; align-items: flex-start; }
+}
+
+/* Telas muito estreitas (celulares pequenos/antigos, ~320-360px) */
+@media (max-width: 380px) {
+    :root { --gutter: 0.85rem; }
+    .profile-card { padding: 1.3rem; }
+    .stack-group { padding: 1.15rem 1.1rem; }
+    .site-body { padding: 1rem; }
+    .cv-option { padding: 0.85rem 0.9rem; }
+    .hero-meta { gap: 0.7rem 1rem; }
 }
 
 @media (pointer: coarse) {
