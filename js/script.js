@@ -3,6 +3,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ==========================================================
+    // 0.0 HELPERS DE DIGITAÇÃO (compartilhados pela intro do
+    //     card de perfil E pela troca de tema)
+    // ==========================================================
+    function typeText(el, text, speed, onDone) {
+        let i = 0;
+        (function step() {
+            if (i <= text.length) {
+                el.textContent = text.slice(0, i);
+                i += 1;
+                setTimeout(step, speed);
+            } else if (onDone) {
+                onDone();
+            }
+        })();
+    }
+
+    function eraseText(el, speed, onDone) {
+        let text = el.textContent;
+        let i = text.length;
+        (function step() {
+            if (i >= 0) {
+                el.textContent = text.slice(0, i);
+                i -= 1;
+                setTimeout(step, speed);
+            } else if (onDone) {
+                onDone();
+            }
+        })();
+    }
+
+    // ==========================================================
     // 0. INTRO DO CARD DE PERFIL: digitação do nome/cargo e
     //    descriptografia do status
     // ==========================================================
@@ -40,19 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
         roleEl.textContent = "";
         nameEl.classList.add("typing-caret");
         roleEl.classList.add("typing-caret");
-
-        function typeText(el, text, speed, onDone) {
-            let i = 0;
-            (function step() {
-                if (i <= text.length) {
-                    el.textContent = text.slice(0, i);
-                    i += 1;
-                    setTimeout(step, speed);
-                } else if (onDone) {
-                    onDone();
-                }
-            })();
-        }
 
         const DECRYPT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*";
 
@@ -136,15 +154,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
         applyTheme(getPreferredTheme());
 
-        // A troca de tema só troca as cores — a digitação/descriptografia
-        // do card de perfil acontece apenas ao carregar a página (ver
-        // runHeroIntro), não ao clicar no botão de tema.
+        // Ao trocar de tema, o logo "GMenezs" e o nome "Gabriel Menezes"
+        // (quando existir na página) apagam e são redigitados — o tema
+        // só é efetivamente trocado depois que os dois já apagaram, para
+        // que a redigitação já saia na cor certa: preta/sólida no tema
+        // claro, com o degradê roxo do tema escuro no tema escuro.
+        let isSwitching = false;
+
+        function switchThemeWithEffect(nextTheme) {
+            const targets = [document.querySelector(".logo"), document.querySelector(".hero-name")]
+                .filter(Boolean);
+
+            if (!targets.length || prefersReducedMotion) {
+                applyTheme(nextTheme);
+                localStorage.setItem(STORAGE_KEY, nextTheme);
+                return;
+            }
+
+            isSwitching = true;
+            const originals = targets.map((el) => el.textContent);
+            let pendingErase = targets.length;
+
+            targets.forEach((el) => el.classList.add("typing-caret"));
+
+            targets.forEach((el) => {
+                eraseText(el, 30, () => {
+                    pendingErase -= 1;
+                    if (pendingErase === 0) {
+                        // Todos apagados: agora sim troca o tema, então a
+                        // redigitação abaixo já nasce com a cor/degradê certos.
+                        applyTheme(nextTheme);
+                        localStorage.setItem(STORAGE_KEY, nextTheme);
+
+                        let pendingType = targets.length;
+                        targets.forEach((el2, idx) => {
+                            typeText(el2, originals[idx], 55, () => {
+                                el2.classList.remove("typing-caret");
+                                pendingType -= 1;
+                                if (pendingType === 0) isSwitching = false;
+                            });
+                        });
+                    }
+                });
+            });
+        }
+
         if (toggleBtn) {
             toggleBtn.addEventListener("click", () => {
+                if (isSwitching) return;
                 const current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
                 const next = current === "dark" ? "light" : "dark";
-                applyTheme(next);
-                localStorage.setItem(STORAGE_KEY, next);
+                switchThemeWithEffect(next);
             });
         }
     })();
