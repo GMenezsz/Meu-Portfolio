@@ -72,11 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     (function setupCvModal() {
         const openBtns = document.querySelectorAll("[data-cv-open]");
         const modal = document.getElementById("cv-modal");
-        console.log("[debug] setupCvModal: botões [data-cv-open] encontrados:", openBtns.length, "| modal #cv-modal encontrado:", !!modal);
-        if (!openBtns.length || !modal) {
-            console.log("[debug] PAROU: setupCvModal saiu cedo (faltou botão ou modal)");
-            return;
-        }
+        if (!openBtns.length || !modal) return;
 
         let lastFocused = null;
 
@@ -96,95 +92,44 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.key === "Escape") closeModal();
         }
 
-        openBtns.forEach((btn) => btn.addEventListener("click", () => {
-            console.log("[debug] botão 'Baixar currículo' clicado, abrindo modal de escolha");
-            openModal();
-        }));
+        openBtns.forEach((btn) => btn.addEventListener("click", openModal));
         modal.querySelectorAll("[data-cv-close]").forEach((el) => {
             el.addEventListener("click", closeModal);
         });
 
-        // Abre uma ÚNICA aba nova, própria, mostrando o PDF (a aba do
-        // portfólio nunca é tocada, fica exatamente como estava). Assim que
-        // essa aba nova termina de carregar, o download é disparado
-        // automaticamente dentro dela — clicou, abriu, baixou, sem precisar
-        // clicar em nenhum botão extra.
+        // Para cada opção de currículo: abre o PDF numa aba nova de verdade
+        // (a aba do portfólio não é tocada) E dispara o download, ao mesmo
+        // tempo — usando dois links <a> reais clicados via JS. Cliques em
+        // links reais praticamente nunca são bloqueados por bloqueador de
+        // pop-up (diferente de window.open(), que vimos ser bloqueado
+        // silenciosamente em alguns navegadores como o Firefox).
         const cvOptionBtns = modal.querySelectorAll(".cv-option[data-cv-file]");
-        console.log("[debug] botões de currículo encontrados no modal:", cvOptionBtns.length);
         cvOptionBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
-                console.log("[debug] opção de currículo clicada:", btn.getAttribute("data-cv-name"));
                 const relativeUrl = btn.getAttribute("data-cv-file");
-                const filename = btn.getAttribute("data-cv-name") || "";
-                if (!relativeUrl) {
-                    console.log("[debug] PAROU: data-cv-file está vazio/ausente neste botão");
-                    return;
-                }
+                const filename = btn.getAttribute("data-cv-name") || "curriculo.pdf";
+                if (!relativeUrl) return;
 
                 const absoluteUrl = new URL(relativeUrl, window.location.href).href;
-                console.log("[debug] URL absoluta do PDF:", absoluteUrl);
-                // IMPORTANTE: NÃO usar "noopener" aqui — quando "noopener" é
-                // passado, o navegador retorna null em window.open() (é o
-                // comportamento padrão da especificação), então perdemos a
-                // referência da aba nova e nada mais funciona depois disso.
-                // Em vez disso, pegamos a referência normalmente e zeramos
-                // newTab.opener manualmente logo abaixo, o que dá a mesma
-                // proteção de segurança sem perder o controle da aba.
-                const newTab = window.open("", "_blank");
-                console.log("[debug] resultado de window.open():", newTab);
 
-                if (newTab) {
-                    newTab.opener = null;
-                    newTab.document.title = filename || "Currículo";
+                // 1) Abre o PDF numa aba nova (a aba do portfólio continua
+                // exatamente como estava).
+                const viewLink = document.createElement("a");
+                viewLink.href = absoluteUrl;
+                viewLink.target = "_blank";
+                viewLink.rel = "noopener noreferrer";
+                document.body.appendChild(viewLink);
+                viewLink.click();
+                viewLink.remove();
 
-                    const style = newTab.document.createElement("style");
-                    style.textContent = "html,body{margin:0;height:100%;background:#525659;}iframe{display:block;width:100%;height:100%;border:0;}";
-                    newTab.document.head.appendChild(style);
-
-                    const iframe = newTab.document.createElement("iframe");
-                    iframe.src = absoluteUrl;
-                    newTab.document.body.appendChild(iframe);
-
-                    let downloaded = false;
-                    const runDownload = () => {
-                        if (downloaded) return;
-                        downloaded = true;
-                        try {
-                            // Método principal: baixa o PDF como blob dentro da
-                            // própria aba nova e força o "Salvar como" — funciona
-                            // mesmo que o navegador tente apenas exibir o PDF.
-                            newTab.fetch(absoluteUrl)
-                                .then((res) => res.blob())
-                                .then((blob) => {
-                                    const blobUrl = newTab.URL.createObjectURL(blob);
-                                    const link = newTab.document.createElement("a");
-                                    link.href = blobUrl;
-                                    link.download = filename || "curriculo.pdf";
-                                    newTab.document.body.appendChild(link);
-                                    link.click();
-                                    link.remove();
-                                    setTimeout(() => newTab.URL.revokeObjectURL(blobUrl), 4000);
-                                })
-                                .catch(() => {
-                                    // Fallback (ex.: rodando localmente via file://,
-                                    // onde fetch entre arquivos é bloqueado pelo navegador).
-                                    const link = newTab.document.createElement("a");
-                                    link.href = absoluteUrl;
-                                    link.download = filename || "curriculo.pdf";
-                                    newTab.document.body.appendChild(link);
-                                    link.click();
-                                    link.remove();
-                                });
-                        } catch (e) {
-                            // Aba pode ter sido fechada pelo usuário antes da hora; ignora.
-                        }
-                    };
-
-                    iframe.addEventListener("load", runDownload, { once: true });
-                    // Garante o download mesmo se o evento "load" do iframe
-                    // não disparar (ex.: o próprio visualizador de PDF do navegador).
-                    setTimeout(runDownload, 900);
-                }
+                // 2) Dispara o download automaticamente, na hora, sem
+                // precisar clicar em nenhum botão extra.
+                const downloadLink = document.createElement("a");
+                downloadLink.href = absoluteUrl;
+                downloadLink.download = filename;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                downloadLink.remove();
 
                 closeModal();
             });
