@@ -72,7 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
     (function setupCvModal() {
         const openBtns = document.querySelectorAll("[data-cv-open]");
         const modal = document.getElementById("cv-modal");
-        if (!openBtns.length || !modal) return;
+        console.log("[debug] setupCvModal: botões [data-cv-open] encontrados:", openBtns.length, "| modal #cv-modal encontrado:", !!modal);
+        if (!openBtns.length || !modal) {
+            console.log("[debug] PAROU: setupCvModal saiu cedo (faltou botão ou modal)");
+            return;
+        }
 
         let lastFocused = null;
 
@@ -92,7 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.key === "Escape") closeModal();
         }
 
-        openBtns.forEach((btn) => btn.addEventListener("click", openModal));
+        openBtns.forEach((btn) => btn.addEventListener("click", () => {
+            console.log("[debug] botão 'Baixar currículo' clicado, abrindo modal de escolha");
+            openModal();
+        }));
         modal.querySelectorAll("[data-cv-close]").forEach((el) => {
             el.addEventListener("click", closeModal);
         });
@@ -102,13 +109,20 @@ document.addEventListener("DOMContentLoaded", () => {
         // essa aba nova termina de carregar, o download é disparado
         // automaticamente dentro dela — clicou, abriu, baixou, sem precisar
         // clicar em nenhum botão extra.
-        modal.querySelectorAll(".cv-option[data-cv-file]").forEach((btn) => {
+        const cvOptionBtns = modal.querySelectorAll(".cv-option[data-cv-file]");
+        console.log("[debug] botões de currículo encontrados no modal:", cvOptionBtns.length);
+        cvOptionBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
+                console.log("[debug] opção de currículo clicada:", btn.getAttribute("data-cv-name"));
                 const relativeUrl = btn.getAttribute("data-cv-file");
                 const filename = btn.getAttribute("data-cv-name") || "";
-                if (!relativeUrl) return;
+                if (!relativeUrl) {
+                    console.log("[debug] PAROU: data-cv-file está vazio/ausente neste botão");
+                    return;
+                }
 
                 const absoluteUrl = new URL(relativeUrl, window.location.href).href;
+                console.log("[debug] URL absoluta do PDF:", absoluteUrl);
                 // IMPORTANTE: NÃO usar "noopener" aqui — quando "noopener" é
                 // passado, o navegador retorna null em window.open() (é o
                 // comportamento padrão da especificação), então perdemos a
@@ -117,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // newTab.opener manualmente logo abaixo, o que dá a mesma
                 // proteção de segurança sem perder o controle da aba.
                 const newTab = window.open("", "_blank");
+                console.log("[debug] resultado de window.open():", newTab);
 
                 if (newTab) {
                     newTab.opener = null;
