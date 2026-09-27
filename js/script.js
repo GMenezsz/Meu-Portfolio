@@ -109,9 +109,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!relativeUrl) return;
 
                 const absoluteUrl = new URL(relativeUrl, window.location.href).href;
-                const newTab = window.open("", "_blank", "noopener");
+                // IMPORTANTE: NÃO usar "noopener" aqui — quando "noopener" é
+                // passado, o navegador retorna null em window.open() (é o
+                // comportamento padrão da especificação), então perdemos a
+                // referência da aba nova e nada mais funciona depois disso.
+                // Em vez disso, pegamos a referência normalmente e zeramos
+                // newTab.opener manualmente logo abaixo, o que dá a mesma
+                // proteção de segurança sem perder o controle da aba.
+                const newTab = window.open("", "_blank");
 
                 if (newTab) {
+                    newTab.opener = null;
                     newTab.document.title = filename || "Currículo";
 
                     const style = newTab.document.createElement("style");
