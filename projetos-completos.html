@@ -54,15 +54,39 @@
         <div>
             <div class="page-heading">
                 <div>
-                    <span class="section-eyebrow">no ar</span>
-                    <h1 class="section-title">Todos os websites</h1>
+                    <span class="section-eyebrow section-eyebrow--live">no ar</span>
+                    <h1 class="sr-only">Todos os projetos</h1>
                 </div>
-                <a class="back-link" href="index.html#websites"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> voltar</a>
+                <a class="section-link section-link--card" href="index.html#websites"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> voltar</a>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter" id="project-filter">
+                    <button type="button" class="filter-toggle" id="filter-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="filter-menu">
+                        <i class="fa-solid fa-filter" aria-hidden="true"></i>
+                        <span id="filter-label">Todos os projetos</span>
+                        <i class="fa-solid fa-chevron-down filter-chevron" aria-hidden="true"></i>
+                    </button>
+                    <div class="filter-menu" id="filter-menu" role="menu" hidden>
+                        <button type="button" class="filter-option is-active" role="menuitemradio" aria-checked="true" data-filter="all">
+                            <span>Todos os projetos</span>
+                            <i class="fa-solid fa-check" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="filter-option" role="menuitemradio" aria-checked="false" data-filter="websites">
+                            <span>Todos os Websites</span>
+                            <i class="fa-solid fa-check" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="filter-option" role="menuitemradio" aria-checked="false" data-filter="etl">
+                            <span>Extract, Transform, Load (ETL)</span>
+                            <i class="fa-solid fa-check" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="showcase-list">
 
-                <article class="showcase-item showcase-item--calc" id="nexus-calc">
+                <article class="showcase-item showcase-item--calc" id="nexus-calc" data-category="websites">
                     <div class="showcase-media">
                         <img src="assets/screenshots/nexus-calc.png" alt="Captura de tela do Nexus Calc" loading="lazy">
                     </div>
@@ -81,7 +105,7 @@
                     </div>
                 </article>
 
-                <article class="showcase-item showcase-item--finance" id="nexus-finance">
+                <article class="showcase-item showcase-item--finance" id="nexus-finance" data-category="websites">
                     <div class="showcase-media">
                         <img src="assets/screenshots/nexus-finance.png" alt="Captura de tela do Nexus Finance" loading="lazy">
                     </div>
@@ -99,7 +123,7 @@
                     </div>
                 </article>
 
-                <article class="showcase-item showcase-item--etl" id="etl-com-streamlit">
+                <article class="showcase-item showcase-item--etl" id="etl-com-streamlit" data-category="etl">
                     <div class="showcase-media">
                         <img src="assets/screenshots/etl-com-streamlit.png" alt="Captura de tela do ETL com Streamlit" loading="lazy">
                     </div>
@@ -123,7 +147,7 @@
                     </div>
                 </article>
 
-                <article class="showcase-item showcase-item--vendas" id="painel-de-vendas">
+                <article class="showcase-item showcase-item--vendas" id="painel-de-vendas" data-category="etl">
                     <div class="showcase-media">
                         <img src="assets/screenshots/painel-de-vendas.png" alt="Captura de tela do Painel de Vendas" loading="lazy">
                     </div>
@@ -142,7 +166,7 @@
                     </div>
                 </article>
 
-                <article class="showcase-item showcase-item--etlvendas" id="etl-vendas-brasil">
+                <article class="showcase-item showcase-item--etlvendas" id="etl-vendas-brasil" data-category="etl">
                     <div class="showcase-media">
                         <img src="assets/screenshots/etl-vendas-brasil.png" alt="Captura de tela do ETL Vendas Brasil" loading="lazy">
                     </div>
