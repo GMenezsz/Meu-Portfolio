@@ -444,4 +444,70 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         sections.forEach((section) => observer.observe(section));
     }
+
+    // ==========================================================
+    // 6. FILTRO DE PROJETOS (página "Todos os projetos")
+    // ==========================================================
+    (function initProjectFilter() {
+        const toggle = document.getElementById("filter-toggle");
+        const menu = document.getElementById("filter-menu");
+        const label = document.getElementById("filter-label");
+        const items = document.querySelectorAll(".showcase-item[data-category]");
+        if (!toggle || !menu || !label) return;
+
+        const options = Array.from(menu.querySelectorAll(".filter-option"));
+
+        function openMenu() {
+            menu.hidden = false;
+            toggle.setAttribute("aria-expanded", "true");
+        }
+
+        function closeMenu() {
+            menu.hidden = true;
+            toggle.setAttribute("aria-expanded", "false");
+        }
+
+        function applyFilter(value) {
+            items.forEach((item) => {
+                const show = value === "all" || item.dataset.category === value;
+                item.hidden = !show;
+                item.classList.remove("is-entering");
+                if (show && !prefersReducedMotion) {
+                    // reinicia a animação de entrada do card
+                    void item.offsetWidth;
+                    item.classList.add("is-entering");
+                }
+            });
+        }
+
+        toggle.addEventListener("click", () => {
+            if (menu.hidden) openMenu();
+            else closeMenu();
+        });
+
+        options.forEach((opt) => {
+            opt.addEventListener("click", () => {
+                options.forEach((o) => {
+                    const active = o === opt;
+                    o.classList.toggle("is-active", active);
+                    o.setAttribute("aria-checked", active ? "true" : "false");
+                });
+                label.textContent = opt.querySelector("span").textContent;
+                applyFilter(opt.dataset.filter);
+                closeMenu();
+                toggle.focus();
+            });
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!menu.hidden && !e.target.closest("#project-filter")) closeMenu();
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && !menu.hidden) {
+                closeMenu();
+                toggle.focus();
+            }
+        });
+    })();
 });
