@@ -29,11 +29,11 @@
         <div class="header-container">
             <a href="#inicio" class="logo">GMenezs</a>
             <nav class="nav-links" aria-label="Navegação principal">
-                <a href="#sobre">sobre</a>
-                <a href="#experiencia">experiência</a>
-                <a href="#stack">stack</a>
-                <a href="#websites">websites</a>
-                <a href="#projetos">projetos</a>
+                <a href="#sobre">Sobre Mim</a>
+                <a href="#experiencia">Experiência</a>
+                <a href="#habilidades">Habilidades</a>
+                <a href="#websites">Websites</a>
+                <a href="#projetos">Projetos</a>
             </nav>
             <div class="header-actions">
                 <button type="button" class="icon-btn theme-toggle" id="theme-toggle-btn" aria-label="Alternar tema claro/escuro">
@@ -170,48 +170,49 @@
             </div>
         </section>
 
-        <!-- STACK -->
-        <section id="stack" class="reveal">
+        <!-- HABILIDADES -->
+        <section id="habilidades" class="reveal">
             <div class="section-head">
                 <div>
                     <span class="section-eyebrow">tecnologias</span>
-                    <h2 class="section-title">Stack</h2>
+                    <h2 class="section-title">Habilidades</h2>
                 </div>
             </div>
-            <div class="stack-grid">
-                <div class="stack-group stack-group--lang">
-                    <span class="stack-group-title">Linguagem</span>
-                    <div class="chip-row"><span class="chip">Python</span></div>
-                </div>
-                <div class="stack-group stack-group--frameworks">
-                    <span class="stack-group-title">Frameworks &amp; APIs</span>
-                    <div class="chip-row">
-                        <span class="chip">FastAPI</span>
-                        <span class="chip">Uvicorn</span>
+            <div class="skills-grid">
+
+                <div class="skill-card skill-card--dev">
+                    <h3 class="skill-card-title">Desenvolvimento &amp; APIs</h3>
+                    <div class="skill-chips">
+                        <span class="skill-chip"><img class="skill-icon" src="assets/icons/python.png" alt="" width="22" height="22" loading="lazy"><span>Python</span></span>
+                        <span class="skill-chip"><img class="skill-icon" src="assets/icons/fastapi.png" alt="" width="22" height="22" loading="lazy"><span>FastAPI</span></span>
                     </div>
                 </div>
-                <div class="stack-group stack-group--db">
-                    <span class="stack-group-title">Banco de dados</span>
-                    <div class="chip-row">
-                        <span class="chip">SQLite</span>
-                        <span class="chip">SQL</span>
+
+                <div class="skill-card skill-card--db">
+                    <h3 class="skill-card-title">Banco de dados</h3>
+                    <div class="skill-chips">
+                        <span class="skill-chip"><img class="skill-icon" src="assets/icons/sql.png" alt="" width="22" height="22" loading="lazy"><span>SQL</span></span>
                     </div>
                 </div>
-                <div class="stack-group stack-group--data">
-                    <span class="stack-group-title">Dados &amp; ferramentas</span>
-                    <div class="chip-row">
-                        <span class="chip">Pandas</span>
-                        <span class="chip">Streamlit</span>
-                        <span class="chip">Excel</span>
+
+                <div class="skill-card skill-card--data">
+                    <h3 class="skill-card-title">Dados &amp; Análise</h3>
+                    <div class="skill-chips">
+                        <span class="skill-chip"><img class="skill-icon" src="assets/icons/pandas.png" alt="" width="22" height="22" loading="lazy"><span>Pandas</span></span>
+                        <span class="skill-chip"><img class="skill-icon" src="assets/icons/plotly.png" alt="" width="22" height="22" loading="lazy"><span>Plotly</span></span>
+                        <span class="skill-chip"><img class="skill-icon" src="assets/icons/streamlit.png" alt="" width="22" height="22" loading="lazy"><span>Streamlit</span></span>
+                        <span class="skill-chip"><img class="skill-icon" src="assets/icons/excel.png" alt="" width="22" height="22" loading="lazy"><span>Excel</span></span>
                     </div>
                 </div>
-                <div class="stack-group stack-group--vcs">
-                    <span class="stack-group-title">Versionamento</span>
-                    <div class="chip-row">
-                        <span class="chip">Git</span>
-                        <span class="chip">GitHub</span>
+
+                <div class="skill-card skill-card--vcs">
+                    <h3 class="skill-card-title">Versionamento</h3>
+                    <div class="skill-chips">
+                        <span class="skill-chip"><img class="skill-icon" src="assets/icons/git.png" alt="" width="22" height="22" loading="lazy"><span>Git</span></span>
+                        <span class="skill-chip"><img class="skill-icon skill-icon--invert" src="assets/icons/github.png" alt="" width="22" height="22" loading="lazy"><span>GitHub</span></span>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -278,6 +279,22 @@
                         <span class="site-url">etl-vendas-brasil.streamlit.app</span>
                         <p class="site-desc">Pipeline de Extração, Transformação e Carga (ETL) desenvolvido em Python utilizando a biblioteca Pandas para processar bases de dados de vendas de lojas brasileiras, preparando os dados para análises de negócios (BI) e futuras integrações com dashboards interativos.</p>
                     </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- PROJETOS SQL -->
+        <section id="projetos-sql" class="reveal">
+            <div class="section-head">
+                <div>
+                    <span class="section-eyebrow section-eyebrow--live">código aberto</span>
+                    <h2 class="section-title">Projetos SQL</h2>
+                </div>
+            </div>
+            <div class="project-list">
+                <a class="project-item" href="https://github.com/GMenezsz/SQL-Practice" target="_blank" rel="noopener noreferrer">
+                    <h3>SQL Practice <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></h3>
+                    <p>Repositório dedicado aos meus estudos de SQL Server utilizando o banco AdventureWorks.</p>
                 </a>
             </div>
         </section>
